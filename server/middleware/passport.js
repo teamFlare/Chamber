@@ -4,7 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
-const config = require('config')['passport'];
+const config = require('../../config/development.json');
 const models = require('../../db/models');
 
 passport.serializeUser((profile, done) => {
@@ -112,17 +112,18 @@ passport.use('local-login', new LocalStrategy({
   }));
 
 passport.use('google', new GoogleStrategy({
-  clientID: config.Google.clientID,
-  clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
+  clientID: config.passport.Google.clientID,
+  clientSecret: config.passport.Google.clientSecret,
+  callbackURL: config.passport.Google.callbackURL,
+  passReqToCallback: true
 },
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
+  (req, accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile(req ,'google', profile, done))
 );
 
 passport.use('facebook', new FacebookStrategy({
-  clientID: config.Facebook.clientID,
-  clientSecret: config.Facebook.clientSecret,
-  callbackURL: config.Facebook.callbackURL,
+  clientID: config.passport.Facebook.clientID,
+  clientSecret: config.passport.Facebook.clientSecret,
+  callbackURL: config.passport.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
@@ -130,15 +131,15 @@ passport.use('facebook', new FacebookStrategy({
 
 // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
 passport.use('twitter', new TwitterStrategy({
-  consumerKey: config.Twitter.consumerKey,
-  consumerSecret: config.Twitter.consumerSecret,
-  callbackURL: config.Twitter.callbackURL,
+  consumerKey: config.passport.Twitter.consumerKey,
+  consumerSecret: config.passport.Twitter.consumerSecret,
+  callbackURL: config.passport.Twitter.callbackURL,
   userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('twitter', profile, done))
 );
 
-const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
+const getOrCreateOAuthProfile = (req, type, oauthProfile, done) => {
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
@@ -194,10 +195,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     .catch(() => {
       // TODO: This is not working because redirect to login uses req.flash('loginMessage')
       // and there is no access to req here
-      done(null, null, {
-        'message': 'Signing up requires an email address, \
-          please be sure there is an email address associated with your Facebook account \
-          and grant access when you register.' });
+      done(null, null, req.flash('loginMessage'));
     });
 };
 

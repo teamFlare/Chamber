@@ -4,14 +4,13 @@ The project description
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- Steven Chang
+- Nikhil Mehta
+- Prateek Bhatt
 
 ## Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](https://docs.google.com/document/d/1ChmQ4UzuP3FsjRpBFyu3CBTEi_cpAIB2jsUvP3FxMzQ/edit)
 
 ## Contributing
 
@@ -62,6 +61,8 @@ IMPORTANT: ensure `postgres` is running before performing these steps.
 
 Use grunt to create a new database for your development and test environments:
 
+(In case commands such as grunt or knex are not found on the terminal, type in: `export PATH="$PATH:$(yarn global bin)"`)
+
 Development envronment: `grunt pgcreatedb:default`
 
 Other environments, specify like so: `NODE_ENV=test grunt pgcreatedb:default`
@@ -72,7 +73,7 @@ In terminal, from the root directory:
 
 `knex migrate:latest --env NODE_ENV`
 
-`knex migrate:rollback --env NODE_ENV`
+*Not Necessary for DB creation as it rolls back db creation* `knex migrate:rollback --env NODE_ENV`
 
 `knex seed:run --env NODE_ENV`
 
