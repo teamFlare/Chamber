@@ -37,7 +37,22 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## Development
 
+```
+*** list of .gitignore files (please do this before running yarn or npm) ***
+node_modules
+config/development.json
+config/production.json
+config/test.json
+```
+
 ### Installing System Dependencies
+
+### list of .gitignore files
+(please do this before running yarn)
+node_modules
+config/development.json
+config/production.json
+config/test.json
 
 ```
 brew install yarn
@@ -52,7 +67,6 @@ Yarn is a replacement for npm. It's faster and *guarantees* consistency -- as yo
 ```
 yarn global add grunt-cli knex eslint
 ```
-
 ## Database Initialization
 
 IMPORTANT: ensure `postgres` is running before performing these steps.
@@ -67,6 +81,18 @@ Development envronment: `grunt pgcreatedb:default`
 
 Other environments, specify like so: `NODE_ENV=test grunt pgcreatedb:default`
 
+```
+*** If you encounter Error: 'grunt not found' type in the terminal: ***
+*** `export PATH="$PATH:$(yarn global bin)"` in the terminal ***
+*** answer found in: (https://github.com/yarnpkg/yarn/issues/1321) ***
+
+*** If you encounter Error: role "postgres" does not exist: ***
+*** AND you are using postgres from Homebrew, type in the terminal: ***
+*** `/usr/local/Cellar/postgresql/9.*.*/bin/createuser -s postgres` ***
+*** put your version of postgres in *.*, for example 9.6.1 ***
+*** answer found in: (https://stackoverflow.com/questions/15301826/psql-fatal-role-postgres-does-not-exist) ***
+```
+
 ### Run Migrations & Data Seeds
 
 In terminal, from the root directory:
@@ -76,6 +102,10 @@ In terminal, from the root directory:
 *Not Necessary for DB creation as it rolls back db creation* `knex migrate:rollback --env NODE_ENV`
 
 `knex seed:run --env NODE_ENV`
+
+```
+*** if you need to rollback, run `knex migrate:rollback --env NODE_ENV` ***
+```
 
 Note: `--env NODE_ENV` may be omitted for development. For example, `knex migrate:latest` will run all migrations in the development environment, while `knex migrate:latest --env test` will migrate in the test environment.
 
@@ -88,5 +118,6 @@ To run server: `yarn run start`
 To run tests: `yarn run test`
 
 To run your redis server for the session store `redis-server`
+
 
 
