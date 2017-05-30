@@ -19,12 +19,10 @@
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.2.0",
     "cookie-parser": "^1.4.3",
-    "create-file": "^1.0.1",
     "ejs": "^2.5.6",
     "eslint": "^3.19.0",
     "express": "^4.15.2",
     "express-session": "^1.15.1",
-    "fs": "0.0.1-security",
     "grunt-cli": "^1.2.0",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "knex": "^0.13.0",
@@ -36,10 +34,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^6.1.5",
     "react": "^15.4.2",
-    "react-audio-player": "^0.5.0",
     "react-dom": "^15.4.2",
-    "react-dropzone": "^2.2.4",
-    "react-sound": "^0.6.1",
     "redis": "^2.7.1"
   },
   "devDependencies": {
