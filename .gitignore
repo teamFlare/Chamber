@@ -1,3 +1,6 @@
 config/development.json
-node_modules/*
-public/dist/bundle.js
+node_modules
+public/dist/
+config/production.json
+config/test.json
+dump.rdb
