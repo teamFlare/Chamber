@@ -14,12 +14,33 @@ db.plugin('registry');
 //     .catch((error) => {
 //         console.log(error)
 //     })
+ 
+// knex(beatid).join('profiles', 'beatidTable.profiles_id', '=', 'profiles.id').select('profiles.display as beatDisplay', 'profiles.first as beatFirst', 'profiles.last as beatLast', 'beatidTable.collaboration_id', 'beatidTable.count', 'beatidTable.id', 'beatidTable.name', 'beatidTable.beat_id', 'beatidTable.collab_id', 'beatidTable.link', 'beatidTable.created_at', 'beatidTable.updated_at', 'beatidTable.profiles_id', 'beatidTable.type as beatType', 'beatidTable.tempo as beatTempo')
+
+
+// var collabsQuery = knex.table('likes').innerJoin('collaborations', 'likes.collaboration_id', '=', 'collaborations.id').as('collabsTable');
+// var orderedQuery = knex.select('collaboration_id').count('collaboration_id').from(collabsQuery).groupBy('collaboration_id').orderByRaw('count(distinct collaboration_id) desc limit 5').as('orderedTable');
+// var topCollabs = knex(orderedQuery).innerJoin('collaborations', 'orderedTable.collaboration_id', '=', 'collaborations.id').as('topcollabTable');
+// var beatid = knex(topCollabs).innerJoin('submissions', 'topcollabTable.beat_id', '=', 'submissions.id').as('beatidTable');
+// var beatProfile = knex(beatid).join('profiles', 'beatidTable.profiles_id', '=', 'profiles.id').select('*','beatidTable.profiles_id as beatProfId','beatidTable.tempo as beatTempo', 'profiles.display as beatDisplay', 'profiles.first as beatFirst', 'profiles.last as beatLast').as('beatprofileTable');
+// var collabid = knex(beatProfile).innerJoin('submissions', 'beatprofileTable.collab_id', '=', 'submissions.id').select('*', 'submissions.tempo as vocalTempo', 'submissions.profiles_id as vocalId').as('collabidTable');
+
+// knex(collabid).join('profiles', 'collabidTable.vocalId', '=', 'profiles.id').select('*', 'profiles.display as vocalDisplay', 'profiles.first as vocalFirst', 'profiles.last as vocalLast').orderBy('count', 'desc')
+//     .then((response) => {
+//         console.log(response)
+//     })
+//     .catch((error) => {
+//         console.log(error)
+//     })
 
 var collabsQuery = knex.table('likes').innerJoin('collaborations', 'likes.collaboration_id', '=', 'collaborations.id').as('collabsTable');
 var orderedQuery = knex.select('collaboration_id').count('collaboration_id').from(collabsQuery).groupBy('collaboration_id').orderByRaw('count(distinct collaboration_id) desc limit 5').as('orderedTable');
 var topCollabs = knex(orderedQuery).innerJoin('collaborations', 'orderedTable.collaboration_id', '=', 'collaborations.id').as('topcollabTable');
+var beatid = knex(topCollabs).innerJoin('submissions', 'topcollabTable.beat_id', '=', 'submissions.id').as('beatidTable');
+var beatProfile = knex(beatid).join('profiles', 'beatidTable.profiles_id', '=', 'profiles.id').select('*','beatidTable.profiles_id as beatProfId','beatidTable.tempo as beatTempo', 'profiles.display as beatDisplay', 'profiles.first as beatFirst', 'profiles.last as beatLast').as('beatprofileTable');
+var collabid = knex(beatProfile).innerJoin('submissions', 'beatprofileTable.collab_id', '=', 'submissions.id').select('*', 'submissions.tempo as vocalTempo', 'submissions.profiles_id as vocalId').as('collabidTable');
 
-knex(topCollabs).innerJoin('submissions', 'topcollabTable.beat_id', '=', 'submissions.id')
+knex(collabid).join('profiles', 'collabidTable.vocalId', '=', 'profiles.id').select('*', 'profiles.display as vocalDisplay', 'profiles.first as vocalFirst', 'profiles.last as vocalLast').orderBy('created_at', 'desc')
     .then((response) => {
         console.log(response)
     })
