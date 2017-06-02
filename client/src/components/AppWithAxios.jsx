@@ -9,7 +9,11 @@ class AppWithAxios extends React.Component {
       songs: []
     }
     this.getSongs = this.getSongs.bind(this);
+    this.handleVoteClick = this.handleVoteClick.bind(this);
+  }
 
+  componentDidMount() {
+    this.getSongs();
   }
 
   getSongs() {
@@ -24,10 +28,36 @@ class AppWithAxios extends React.Component {
       })
   }
 
+  handleVoteClick(collab_id) {
+    console.log('collab_id', collab_id);
+    axios.post('/api/voteClick', {collaboration_id: collab_id})
+      .then(result => console.log(result))
+      .catch(error => console.log('Error! inside handleVoteClick AppWithAxios', error))
+      this.getSongs();
+  }
+
   render() {
     console.log('this.state.songs -> ', this.state.songs);
     return (
-      <div>AppWithAxios</div>
+      <div>Collaborations
+        {this.state.songs.map((song, i) => {
+          return (
+            <div>
+            <h3>{song.name}</h3>
+            <ul>
+              <li>Beat Creator: {song.beatDisplay}</li>
+              <li>Vocal Creator: {song.vocalDisplay}</li>
+              <li>Vote Count: {song.count}</li>
+            </ul>
+            <button className="vote-button btn btn-warning" onClick={() => this.handleVoteClick(song.collaboration_id)}>
+              Like
+            </button>
+
+            </div>
+          )
+        })}
+
+      </div>
     )
   }
 }
