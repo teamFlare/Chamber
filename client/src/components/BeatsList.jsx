@@ -1,5 +1,5 @@
 import React from 'react';
-import Beat from './Beat';
+import Beat from './Beat.jsx';
 
 /*const BeatsList = () => {
   return (
