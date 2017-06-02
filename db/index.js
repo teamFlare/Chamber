@@ -25,11 +25,17 @@ function getSongsFromDb(callback) {
 
   knex(collabid).join('profiles', 'collabidTable.vocalId', '=', 'profiles.id').select('*', 'profiles.display as vocalDisplay', 'profiles.first as vocalFirst', 'profiles.last as vocalLast').orderBy('count', 'desc')
       .then((response) => {
-          callback(response)
+          callback(response, null)
       })
       .catch((error) => {
-          callback(error)
+          callback(null, error)
       })
+}
+
+function postVoteToDb(voteObject, callback) {
+  knex('likes').insert({profiles_id: voteObject.profile_id, collaboration_id: voteObject.collabs_id})
+    .then(result => console.log(result))
+    .catch(error => console.log(error))
 }
 
 // var collabsQuery = knex.table('likes').innerJoin('collaborations', 'likes.collaboration_id', '=', 'collaborations.id').as('collabsTable');
@@ -61,5 +67,6 @@ function getSongsFromDb(callback) {
 
 
 module.exports = db;
+module.exports.postVoteToDb = postVoteToDb;
 module.exports.getSongsFromDb = getSongsFromDb;
 
