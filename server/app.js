@@ -24,5 +24,6 @@ app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/api/topBeats', routes.topBeats);
+app.use('/api/voteClick', routes.voteClick);
 
 module.exports = app;
