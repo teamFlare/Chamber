@@ -49,6 +49,9 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/api/topBeats', routes.topBeats);
 app.use('/api/voteClick', routes.voteClick);
+app.use('/api/comment', routes.commentClick);
+app.use('/api/commentRender', routes.commentRender);
+
 
 
 app.post('/upload', upload.single('theseNamesMustMatch'), (req, res) => {

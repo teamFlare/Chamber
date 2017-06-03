@@ -6,7 +6,7 @@ db.plugin('registry');
 function getSongsFromDb(callback) {
 var beatsQuery = knex.table('likes').innerJoin('submissions', 'likes.submission_id', '=', 'submissions.id').where({'submissions.type':'beat'}).as('beatsTable');
 var orderedQuery = knex.select('submission_id').count('submission_id').from(beatsQuery).groupBy('submission_id').orderByRaw('count(distinct submission_id) desc limit 5').as('orderedTable');
-var topBeats = knex(orderedQuery).innerJoin('submissions', 'orderedTable.submission_id', '=', 'submissions.id').as('topbeatTable');
+var topBeats = knex(orderedQuery).innerJoin('submissions', 'orderedTable.submission_id', '=', 'submissions.id').orderBy('count').as('topbeatTable');
 
 knex(topBeats).innerJoin('profiles', 'topbeatTable.profiles_id', '=', 'profiles.id')
     .then((response) => {
@@ -17,8 +17,8 @@ knex(topBeats).innerJoin('profiles', 'topbeatTable.profiles_id', '=', 'profiles.
         // console.log(error)
         callback(null, error)
     })
- }
-
+}
+ 
 // function getSongsFromDb(callback) {
 //   var collabsQuery = knex.table('likes').innerJoin('collaborations', 'likes.collaboration_id', '=', 'collaborations.id').as('collabsTable');
 //   var orderedQuery = knex.select('collaboration_id').count('collaboration_id').from(collabsQuery).groupBy('collaboration_id').orderByRaw('count(distinct collaboration_id) desc limit 5').as('orderedTable');
@@ -26,9 +26,10 @@ knex(topBeats).innerJoin('profiles', 'topbeatTable.profiles_id', '=', 'profiles.
 //   var beatid = knex(topCollabs).innerJoin('submissions', 'topcollabTable.beat_id', '=', 'submissions.id').as('beatidTable');
 //   var beatProfile = knex(beatid).join('profiles', 'beatidTable.profiles_id', '=', 'profiles.id').select('*','beatidTable.profiles_id as beatProfId','beatidTable.tempo as beatTempo', 'profiles.display as beatDisplay', 'profiles.first as beatFirst', 'profiles.last as beatLast').as('beatprofileTable');
 //   var collabid = knex(beatProfile).innerJoin('submissions', 'beatprofileTable.collab_id', '=', 'submissions.id').select('*', 'submissions.tempo as vocalTempo', 'submissions.profiles_id as vocalId').as('collabidTable');
-
-//   knex(collabid).join('profiles', 'collabidTable.vocalId', '=', 'profiles.id').select('*', 'profiles.display as vocalDisplay', 'profiles.first as vocalFirst', 'profiles.last as vocalLast').orderBy('count', 'desc')
+  
+//   knex(collabid).join('profiles', 'collabidTable.vocalId', '=', 'profiles.id').select('*', 'profiles.display as vocalDisplay', 'profiles.first as vocalFirst', 'profiles.last as vocalLast').orderBy('count', 'desc').as('collabprofileTable')
 //       .then((response) => {
+//         // console.log(response)
 //           callback(response, null)
 //       })
 //       .catch((error) => {
@@ -36,8 +37,25 @@ knex(topBeats).innerJoin('profiles', 'topbeatTable.profiles_id', '=', 'profiles.
 //       })
 // }
 
+function getCommentsFromDb(callback, collab_id) {
+  knex('comments').where({submission_id: collab_id}).select('comment')
+      .then((response) => {
+        // console.log(response)
+          callback(response, null)
+      })
+      .catch((error) => {
+          callback(null, error)
+      })
+}
+
 function postVoteToDb(voteObject, callback) {
-  knex('likes').insert({profiles_id: voteObject.profile_id, collaboration_id: voteObject.collabs_id})
+  knex('likes').insert({profiles_id: voteObject.profile_id, submission_id: voteObject.collabs_id})
+    .then(result => console.log(result))
+    .catch(error => console.log(error))
+}
+
+function postCommentToDb(voteObject, callback) {
+  knex('comments').insert({profiles_id: voteObject.profile_id, submission_id: voteObject.collabs_id, comment: voteObject.comment})
     .then(result => console.log(result))
     .catch(error => console.log(error))
 }
@@ -73,4 +91,8 @@ function postVoteToDb(voteObject, callback) {
 module.exports = db;
 module.exports.postVoteToDb = postVoteToDb;
 module.exports.getSongsFromDb = getSongsFromDb;
+module.exports.postCommentToDb = postCommentToDb;
+module.exports.getCommentsFromDb = getCommentsFromDb;
+
+
 
