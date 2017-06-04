@@ -52,9 +52,9 @@ class AppWithAxios extends React.Component {
     return (
       <div>
         <button 
-          className='btn btn-danger' 
+          className='btn btn-danger pull-right' 
           onClick={this.handleDisplayChange}>
-          Display Profile
+          Upload Song
         </button>
          <PageToDisplay songs={this.state.songs}/>
       </div>
