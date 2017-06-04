@@ -50,10 +50,8 @@ class Profile extends React.Component {
 
     return (
       <div>
-        <h1>Misty Scrotes!</h1>
-        <ReactAudioPlayer src={currentSong} autoPlay controls/>
+        <h1>Upload file</h1>
         <Dropzone onDrop={this.onDrop}/>
-        <SongList songs={this.state.songs} handleSongPick={this.handleSongPick}/>
       </div>
     );
   }
