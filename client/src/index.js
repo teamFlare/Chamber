@@ -20,7 +20,7 @@ const router = (
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Profile}></IndexRoute>
+        <IndexRoute component={AppWithAxios}></IndexRoute>
         <Route path="/view/:postId" component={Beat}></Route>
       </Route>
     </Router>

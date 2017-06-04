@@ -7,6 +7,7 @@ class SongEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      default: 'http://dreamsupport.us/justin/Music/Beyonce%20Lemonade/01%20Pray%20You%20Catch%20Me.mp3',
       comment: '',
       comments: [],
       playsong: false
@@ -60,21 +61,36 @@ class SongEntry extends React.Component {
   render() {
           return (
             <div>
-            <h3 onClick={this.playSong}>{this.props.song.name}</h3>
-            <ul>
-              <li>Beat Creator: {this.props.song.display}</li>
-              <li>Vote Count: {this.props.song.count}</li>
-            </ul>
-            <button className="vote-button btn btn-warning" onClick={() => this.handleVoteClick(this.props.song.submission_id)}>
-              Like
-            </button>
-            <input onChange={this.handleCommentTyping}></input>
-            <button onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
-            {this.state.playsong ? <ReactAudioPlayer src={this.props.song.link} autoPlay controls/> : null}
-            <div>Comments:
-            {this.state.comments.map((comment) => {
-              return <div>{comment.comment}</div>
-            })}
+            <div className="container-fluid">
+              <div style={{'background-color': '#404040'}} className="row">
+                <h3 style={{'color': '#f2f2f2', "paddingLeft": "30px"}}>{this.props.song.name}</h3>
+              </div>
+            </div>
+            <div className="container-fluid">
+              <div style={{'background-color': '#404040', 'padding':'30px'}} className="row">
+                <button  className="col-xs-2 vote-button btn btn-danger" onClick={() => this.handleVoteClick(this.props.song.submission_id)}>
+                Like
+                </button>
+                <ReactAudioPlayer style={{'color': 'yellow'}} className="col-xs-10" src={this.props.song.link ? this.props.song.link : this.state.default} controls/>
+              </div>
+              <div style={{'background-color': '#404040'}} className="row">
+                <p style={{'color': '#f2f2f2', "paddingLeft": "30px"}} className="col-xs-6">Creator: {this.props.song.display}</p>
+                <p style={{'color': '#ff66ff', "paddingLeft": "30px"}} className="col-xs-6">Likes: {this.props.song.count}</p>
+              </div>
+            </div>
+            <div className="container-fluid">
+              <div className="row" style={{'paddingTop': "10px", 'background-color': "white"}}>
+                <input className="col-xs-10"  onChange={this.handleCommentTyping}></input>
+                <button className="vote-button btn btn-warning col-xs-2" onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
+              </div>
+              <div className="row">
+                <h1 style={{'background-color': "white", "color": "#D9534F"}}>Comments:</h1>
+                <div className="card-block" style={{'background-color': "white"}}>
+                  {this.state.comments.map((comment) => {
+                    return <div className="card" style={{'color': "black"}}>{comment.comment}</div>
+                  })}
+              </div>
+            </div>
             </div>
             </div>
           )
