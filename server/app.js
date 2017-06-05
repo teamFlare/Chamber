@@ -31,8 +31,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 AWS.config.update(
   {
-    accessKeyId: 'AKIAJTKICAWGNXC5OX6A',
-    secretAccessKey: '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',
+    accessKeyId: '',
+    secretAccessKey: '',
     // region: 'us-west-2'
   });
   
