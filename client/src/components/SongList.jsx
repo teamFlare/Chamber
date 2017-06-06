@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SongEntry from './SongEntry.jsx';
 
 class SongList extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ handleSongPick(song) {
 					this.props.songs.map((song)=>{
 						return (
 							<div>
-							<h1 onClick={()=>{this.handleSongPick(song)}}>{song.name}</h1>
+								<SongEntry song={song} />
 							</div>
 						)})
 				}
