@@ -19,7 +19,7 @@ import store, { history } from './store';
 const router = (
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={App}>
+      <Route path="/">
         <IndexRoute component={AppWithAxios}></IndexRoute>
         <Route path="/view/:postId" component={Beat}></Route>
       </Route>

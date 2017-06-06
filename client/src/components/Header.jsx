@@ -5,14 +5,13 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    };
+    
+    }
   }
 
   render() {
-
-  
     return (
-      <div>CHAMBER</div>
+      <h1>Dungeon Chamber Rappers <u>Unlimited</u></h1>
     )
   }
 }
