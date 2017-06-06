@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import SongList from './SongList.jsx';
 import Profile from './Profile.jsx';
+import Header from './Header.jsx';
 
 class AppWithAxios extends React.Component {
   constructor(props) {
@@ -51,11 +52,14 @@ class AppWithAxios extends React.Component {
 
     return (
       <div>
-        <button 
-          className='btn btn-danger pull-right' 
-          onClick={this.handleDisplayChange}>
-          Upload Song
-        </button>
+        <Header/>
+        <div className='container-fluid'>
+          <button 
+            className='btn btn-danger pull-right' 
+            onClick={this.handleDisplayChange}>
+            Upload Song
+          </button>
+         </div>
          <PageToDisplay songs={this.state.songs}/>
       </div>
     )
