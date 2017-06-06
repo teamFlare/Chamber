@@ -1,0 +1,32 @@
+[
+    {
+    "first": "Prateek",
+    "last": "Bhatt",
+    "display": "PBhatt",
+    "email": "PBhatt@gmail.com",
+    "phone": "123-456-7899"},
+    {
+    "first": "Nikhil",
+    "last": "Mehta",
+    "display": "NMehta",
+    "email": "NMehta@gmail.com",
+    "phone": "123-456-5555"},
+    {
+    "first": "Steve",
+    "last": "Chang",
+    "display": "SChang",
+    "email": "SChang@gmail.com",
+    "phone": "123-456-6666"},
+    {
+    "first": "Jimmy",
+    "last": "Jones",
+    "display": "JJones",
+    "email": "JJones@gmail.com",
+    "phone": "123-456-7777"},
+    {
+    "first": "Freddy",
+    "last": "Fredster",
+    "display": "FFredster",
+    "email": "FFredster@gmail.com",
+    "phone": "123-456-4444"}
+]
