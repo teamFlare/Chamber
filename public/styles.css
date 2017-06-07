@@ -1,0 +1,22 @@
+h1 {
+    font-size: 50px;
+    color: blue;
+}
+h3{
+    font-size: 50px
+}
+.glyphicon {
+  color: white;
+}
+button {
+    color: white;
+}
+button:hover {
+    color: lightcoral;
+}
+.collaborateButton {
+     top: -12px;  
+}
+.comBut {
+     margin-top: -25px
+}

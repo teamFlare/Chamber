@@ -10,7 +10,8 @@ class SongEntry extends React.Component {
       default: 'http://dreamsupport.us/justin/Music/Beyonce%20Lemonade/01%20Pray%20You%20Catch%20Me.mp3',
       comment: '',
       comments: [],
-      playsong: false
+      playsong: false, 
+			numCom: ''
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
     this.handleCommentTyping = this.handleCommentTyping.bind(this);
@@ -46,7 +47,8 @@ class SongEntry extends React.Component {
     axios.get('/api/commentRender', {params: {collab_id: this.props.song.submission_id}})
       .then((results) => {
         this.setState({
-          comments: results.data
+          comments: results.data,
+					numCom: results.data.length
         })
       })
       .catch((error) => {
@@ -59,41 +61,38 @@ class SongEntry extends React.Component {
   }
 
   render() {
-          return (
-            <div>
-            <div>
-              <div style={{'background-color': '#404040'}}>
-                <h3 style={{'color': '#f2f2f2'}}>{this.props.song.name}</h3>
-              </div>
-            </div>
-            {/*<div className="container-fluid">*/}
-              <div style={{'background-color': '#404040'}}>
-                <button  className="vote-button btn btn-danger" onClick={() => this.handleVoteClick(this.props.song.submission_id)}>
-                Like
-                </button>
-                <ReactAudioPlayer style={{'color': 'yellow'}} src={this.props.song.link ? this.props.song.link : this.state.default} controls/>
-              </div>
-              <div style={{'background-color': '#404040'}}>
-                <p style={{'color': '#f2f2f2',}}>Creator: {this.props.song.display}</p>
-                <p style={{'color': '#ff66ff'}}>Likes: {this.props.song.count}</p>
-              </div>
-            {/*</div>*/}
-            {/*<div className="container-fluid">*/}
-              <div style={{'background-color': "white"}}>
-                <input onChange={this.handleCommentTyping}></input>
-                <button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
-              </div>
-              <div>
-                <h1 style={{'background-color': "white", "color": "#D9534F"}}>Comments:</h1>
-                <div style={{'background-color': "white"}}>
-                  {this.state.comments.map((comment) => {
-                    return <div className="card" style={{'color': "black"}}>{comment.comment}</div>
-                  })}
-              </div>
-            </div>
-            </div>
-            // </div>
-          )
+		return (
+			<div className="container">	
+				<div>
+					<h3>{this.props.song.name}</h3>
+				</div>	
+				<div className="row">
+					<ReactAudioPlayer src={this.props.song.link ? this.props.song.link : this.state.default} controls/>
+					<button className="btn comBut btn-danger" onClick={() => this.handleVoteClick(this.props.song.submission_id)}>  
+						<span className="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Likes {this.props.song.count}
+					</button>
+					<button className="btn comBut btn-info">  
+						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
+					</button>
+				</div>
+				<div>
+					<p>Creator: {this.props.song.display}</p>
+					<p>Likes: {this.props.song.count}</p>
+				</div>
+				<div>
+					<input onChange={this.handleCommentTyping}></input>
+					<button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
+				</div>
+				{/*<div>
+					<h1>Comments:</h1>
+					<div >
+						{this.state.comments.map((comment) => {
+							return <div className="card">{comment.comment}</div>
+						})}
+				</div>*/}
+				</div>
+
+ 		)
   }
 }
 
