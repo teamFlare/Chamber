@@ -19,7 +19,6 @@ const router = (
     <Router history={history}>
       <Route path="/">
         <IndexRoute component={AppWithAxios}></IndexRoute>
-        <Route path="/view/:postId" component={Profile}></Route>
       </Route>
     </Router>
   </Provider>
