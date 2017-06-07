@@ -7,8 +7,6 @@ import { render } from 'react-dom';
 // Import Components
 import App from './components/App.jsx';
 import Homepage from './components/Homepage.jsx';
-import BeatsList from './components/BeatsList.jsx';
-import Beat from './components/Beat.jsx';
 import AppWithAxios from './components/AppWithAxios.jsx';
 import Profile from './components/Profile.jsx';
 // import react router deps
@@ -21,7 +19,7 @@ const router = (
     <Router history={history}>
       <Route path="/">
         <IndexRoute component={AppWithAxios}></IndexRoute>
-        <Route path="/view/:postId" component={Beat}></Route>
+        <Route path="/view/:postId" component={Profile}></Route>
       </Route>
     </Router>
   </Provider>
