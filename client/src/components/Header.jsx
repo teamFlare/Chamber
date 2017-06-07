@@ -11,7 +11,9 @@ class Header extends React.Component {
 
   render() {
     return (
-      <h1>Dungeon Chamber Rappers <u>Unlimited</u></h1>
+      <div>
+        <h1>Dungeon Chamber Rappers <u>Unlimited</u></h1>
+      </div>
     )
   }
 }
