@@ -3,6 +3,7 @@ import axios from 'axios';
 import SongList from './SongList.jsx';
 import Profile from './Profile.jsx';
 import Header from './Header.jsx';
+import { Link } from 'react-router';
 
 class AppWithAxios extends React.Component {
   constructor(props) {
@@ -52,7 +53,6 @@ class AppWithAxios extends React.Component {
 
     return (
       <div>
-        <Header/>
         <div className='container-fluid'>           
           <button 
             className='btn btn-danger pull-right' 
