@@ -91,6 +91,7 @@ class SongEntry extends React.Component {
 				</div>*/}
 			
 </div>
+
  		)
   }
 }

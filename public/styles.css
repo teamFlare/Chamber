@@ -1,3 +1,4 @@
+
 body {
 	/*background: url("./abstract-mosaic-background.png");*/
 	padding-top:100px;
@@ -25,12 +26,10 @@ h1 {
 }
 
 h3 {
-
 }
 .glyphicon {
   color: white;
 }
-
 /*General Button Stylings*/
 button {
 	color: white;
@@ -55,4 +54,3 @@ button:hover {
 	font-size: 30px;
 	color: white;
 	padding-left: 0px;
-}
