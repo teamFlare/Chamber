@@ -1,22 +1,56 @@
-h1 {
-    font-size: 50px;
-    color: blue;
+
+body {
+	/*background: url("./abstract-mosaic-background.png");*/
+	padding-top:100px;
+	background-color: white;
+	background-size: contain;
 }
-h3{
-    font-size: 50px
+
+.songListRow {
+	background-color: #FAFAFA;
+	margin-bottom: 25px;
+}
+
+.songTitle {
+	font-weight: bold;
+	padding-left: 10px;
+}
+
+.songCreator {
+	font-weight: bold;
+	padding-left: 10px;
+}
+
+h1 {
+	color: blue;
+}
+
+h3 {
 }
 .glyphicon {
   color: white;
 }
+/*General Button Stylings*/
 button {
-    color: white;
+	color: white;
 }
+
 button:hover {
-    color: lightcoral;
+	color: lightcoral;
 }
+
+/*Collaboration Button Stylings*/
 .collaborateButton {
-     top: -12px;  
+	top: -12px;  
 }
+
+/*Comment Button Stylings*/
 .comBut {
-     margin-top: -25px
+	margin-top: -25px
 }
+
+/*Website Title Stylings*/
+.title {
+	font-size: 30px;
+	color: white;
+	padding-left: 0px;

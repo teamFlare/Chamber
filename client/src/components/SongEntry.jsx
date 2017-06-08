@@ -62,27 +62,26 @@ class SongEntry extends React.Component {
 
   render() {
 		return (
-			<div className="container">	
-				<div>
-					<h3>{this.props.song.name}</h3>
+			<div className="container songListRow">	
+	
+        <div className="row">
+					<h3 className="songTitle">{this.props.song.name}</h3>
 				</div>	
 				<div className="row">
 					<ReactAudioPlayer src={this.props.song.link ? this.props.song.link : this.state.default} controls/>
 					<button className="btn comBut btn-danger" onClick={() => this.handleVoteClick(this.props.song.submission_id)}>  
 						<span className="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Likes {this.props.song.count}
 					</button>
-					<button className="btn comBut btn-info">  
+					<button className="btn comBut btn-info" href="#">  
 						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
 					</button>
+          <p className="songCreator">By {this.props.song.display}</p>
 				</div>
-				<div>
-					<p>Creator: {this.props.song.display}</p>
-					<p>Likes: {this.props.song.count}</p>
-				</div>
-				<div>
+
+				{/*<div>
 					<input onChange={this.handleCommentTyping}></input>
 					<button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
-				</div>
+				</div>*/}
 				{/*<div>
 					<h1>Comments:</h1>
 					<div >
@@ -90,7 +89,8 @@ class SongEntry extends React.Component {
 							return <div className="card">{comment.comment}</div>
 						})}
 				</div>*/}
-				</div>
+			
+</div>
 
  		)
   }

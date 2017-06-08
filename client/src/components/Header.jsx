@@ -11,8 +11,15 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Dungeon Chamber Rappers <u>Unlimited</u></h1>
+      <div className="container-fluid">
+        <nav className="navbar navbar-inverse navbar-fixed-top navbar-collapse">
+          <a className="navbar-brand title" href="/">Co.Lab</a>
+          <ul className="nav navbar-nav navbar-right">
+            <li><a className="navBarLinkStart" href="#">Profile</a></li>
+            <li><a className="navBarLinkStart" href="#">Tournaments</a></li>
+            <li><a className="navBarLinkEnd" href="#">Logout</a></li>
+         </ul>      
+        </nav>
       </div>
     )
   }
