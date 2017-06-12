@@ -4,3 +4,4 @@ public/dist/
 config/production.json
 config/test.json
 dump.rdb
+.DS_Store
