@@ -14,6 +14,7 @@ import Profile from './components/Profile.jsx';
 import Container from './components/Container.jsx';
 import SongDisplay from './components/SongDisplay.jsx';
 import Uploads from './components/Uploads.jsx';
+import Tournaments from './components/Tournaments.jsx';
 // import react router deps
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
@@ -27,6 +28,10 @@ const router = (
         <Route path="/song" component={SongDisplay}></Route>
         <Route path="/profile" component={Profile}></Route>
         <Route path="/upload" component={Uploads}></Route>
+    <Router history={history}>
+      <Route path="/">
+        <IndexRoute component={Tournaments}></IndexRoute>
+        <Route path="/view/:postId" component={Beat}></Route>
       </Route>
     </Router>
   </Provider>
