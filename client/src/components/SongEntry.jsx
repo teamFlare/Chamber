@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
+import { Redirect, browserHistory } from 'react-router';
 
 class SongEntry extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class SongEntry extends React.Component {
       comment: '',
       comments: [],
       playsong: false, 
-			numCom: ''
+			numCom: '',
+      redirect: false
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
     this.handleCommentTyping = this.handleCommentTyping.bind(this);
@@ -59,12 +61,16 @@ class SongEntry extends React.Component {
     this.setState({playsong: !this.state.playsong});
   }
 
+  handleSongClick(str) {
+     browserHistory.push('/singleSong/'+str);
+  }
+
   render() {
     let usrPic = this.props.song.display?this.props.song.display:this.props.myName;
 		return (
 			<div className="container songListRow rcorners">		
         <div className="row">
-					<h3 className="songTitle">{this.props.song.name}</h3>
+					<h3 onClick={()=>{this.handleSongClick(this.props.song.id)}} className="songTitle">{this.props.song.name}</h3>
 				</div>	
 				<div className="row">
 					<ReactAudioPlayer src={this.props.song.link ? this.props.song.link : this.state.default} controls/>

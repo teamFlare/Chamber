@@ -15,8 +15,9 @@ import Container from './components/Container.jsx';
 import SongDisplay from './components/SongDisplay.jsx';
 import Uploads from './components/Uploads.jsx';
 import Tournaments from './components/Tournaments.jsx';
+import SongComponent from './components/SongComponent.jsx';
 // import react router deps
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import store, { history } from './store';
 
@@ -29,6 +30,7 @@ const router = (
         <Route path="/profile" component={Profile}></Route>
         <Route path="/upload" component={Uploads}></Route>
         <Route path="/tournaments" component={Tournaments}></Route>
+        <Route path="/singleSong/:songname" component={SongComponent}></Route>
       </Route>
     </Router>
   </Provider>
