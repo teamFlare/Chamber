@@ -48,6 +48,8 @@ app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/api/topBeats', routes.topBeats);
+app.use('/api/topCollabs', routes.topCollabs);
+app.use('/api/newSongs', routes.newSongs);
 app.use('/api/voteClick', routes.voteClick);
 app.use('/api/comment', routes.commentClick);
 app.use('/api/commentRender', routes.commentRender);
@@ -82,6 +84,30 @@ app.post('/upload', upload.single('theseNamesMustMatch'), (req, res) => {
       });
     }
   });
+});
+
+app.get('/loginInfo', (req, res) => {
+  console.log(req.user);
+  res.send(req.user);
+});
+
+app.get('/userSongs', (req, res) => {
+  // db.getSingleUserSongs(req.user.id, (err, results)=>{
+  //   if(err){
+  //     res.send("Error getting single user data", err);
+  //   }
+  //   res.status(200).send("We got the da")
+  // })
+  knex('submissions').where({profiles_id: req.user.id})
+        .then((response) => {
+            // console.log(response)
+            console.log("Getting user DATA!!", response);
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            console.log("Getting single user data failed!", error)
+            res.status(500).send("Database update failed!");
+        })
 });
 
 // app.get('/api/songs', function (req, res) {

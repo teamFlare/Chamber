@@ -9,8 +9,6 @@ class TopCollabs extends React.Component {
   }
 
   render() {
-
-  
     return (
       <div>Top Collabs</div>
     )

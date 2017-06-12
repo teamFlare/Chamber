@@ -12,7 +12,7 @@ class Footer extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hi</h1>
+        {/*<h1 className="footerCol">Footer Tag</h1>*/}
       </div>
     )
   }

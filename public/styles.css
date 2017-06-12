@@ -1,7 +1,7 @@
 
 body {
 	/*background: url("./abstract-mosaic-background.png");*/
-	padding-top:100px;
+	padding-top: 50px;
 	background-color: white;
 	background-size: contain;
 }
@@ -9,6 +9,7 @@ body {
 .songListRow {
 	background-color: #FAFAFA;
 	margin-bottom: 25px;
+	padding-left: 75px;
 }
 
 .songTitle {
@@ -22,7 +23,7 @@ body {
 }
 
 h1 {
-	color: blue;
+	color: #E0E0E0;
 }
 
 h3 {
@@ -53,4 +54,117 @@ button:hover {
 .title {
 	font-size: 30px;
 	color: white;
-	padding-left: 0px;
+	padding-left: 0px;}
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+	top: -25px;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+	color: black;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: red;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+	-webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1.25s; /* Fading effect takes 1 second */
+}
+
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.bioImages {
+  display: block;
+  width: auto;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.userName {
+	text-align: center;
+}
+
+.jumboPic {
+	background: url('./assets/banner.jpg') no-repeat center center;
+	position: fixed;
+  width: 100%;
+  height: 100%; /*same height as jumbotron */
+  top:0;
+  left:0;
+  z-index: -1;
+}
+
+.rcorners {
+    border-radius: 25px;
+    border: 2px solid #424242;
+    padding: 20px; 
+    /*width: 200px;
+    height: 150px;    */
+}
+
+.footerCol {
+	background-color: #424242
+}
+
+.tagTitle {
+	text-align: center;
+}
+
+.userUploadsTitle {
+	color: #424242
+}
+
+.userProfileTitle {
+	text-align: center;
+}
+
+.uploadBut {
+	text-align: center;
+}
+
+/*.jumbotron {
+  margin-bottom: 0px;
+  height: 350px;
+  color: white;
+  text-shadow: black 0.3em 0.3em 0.3em;
+  background:transparent;
+}*/
+
+
+

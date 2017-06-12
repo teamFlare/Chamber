@@ -13,6 +13,7 @@ import AppWithAxios from './components/AppWithAxios.jsx';
 import Profile from './components/Profile.jsx';
 import Container from './components/Container.jsx';
 import SongDisplay from './components/SongDisplay.jsx';
+import Uploads from './components/Uploads.jsx';
 // import react router deps
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
@@ -25,6 +26,7 @@ const router = (
         <IndexRoute component={AppWithAxios}></IndexRoute>
         <Route path="/song" component={SongDisplay}></Route>
         <Route path="/profile" component={Profile}></Route>
+        <Route path="/upload" component={Uploads}></Route>
       </Route>
     </Router>
   </Provider>

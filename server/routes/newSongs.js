@@ -1,9 +1,9 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const TopBeatsController = require('../controllers').TopBeats;
+const NewSongsController = require('../controllers').NewSongs;
 
 router.route('/')
-  .get(TopBeatsController.getSongs)
+  .get(NewSongsController.getNewSongs)
 
 module.exports = router;

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+import axios from 'axios';
 
 class Header extends React.Component {
   constructor(props) {
@@ -16,10 +17,10 @@ class Header extends React.Component {
         <nav className="navbar navbar-inverse navbar-fixed-top navbar-collapse">
           <a className="navbar-brand title" href="/">Co.Lab</a>
           <ul className="nav navbar-nav navbar-right">
-            <li><Link to='/song'>SongDisplay</Link></li>
+            <li><Link to='/'>Discover Sounds</Link></li>
             <li><Link to='/profile'>Profile</Link></li>
             <li><Link to='/not_yet_set'>Tournaments</Link></li>
-            <li><a className="navBarLinkEnd" href="#">Logout</a></li>
+            <li><a href='/logout' className="navBarLinkEnd">Logout</a></li>
          </ul>      
         </nav>
       </div>
