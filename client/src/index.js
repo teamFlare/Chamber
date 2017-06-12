@@ -28,10 +28,7 @@ const router = (
         <Route path="/song" component={SongDisplay}></Route>
         <Route path="/profile" component={Profile}></Route>
         <Route path="/upload" component={Uploads}></Route>
-    <Router history={history}>
-      <Route path="/">
-        <IndexRoute component={Tournaments}></IndexRoute>
-        <Route path="/view/:postId" component={Beat}></Route>
+        <Route path="/tournaments" component={Tournaments}></Route>
       </Route>
     </Router>
   </Provider>

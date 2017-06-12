@@ -77,23 +77,23 @@ class RoundThree extends React.Component {
           <h2>Final Round</h2>
           <div>Round 3 Beat!! Name: {this.state.round3matchup1.roundbeatname} <ReactAudioPlayer src={this.state.round3matchup1.roundbeatlink} controls/></div>
           <h3>Matchup</h3>
-          <div>
+          <div className="container songListRow rcorners">
           <div>Profile: {this.state.round3matchup1.profile1name}</div>
           <div>Song Submission: {this.state.round3matchup1.profile1songname}</div>
           <div>Votes: {this.state.round3matchup1.profile1count}</div>
-          <button onClick={() => this.voteSubmission(1, this.state.round3matchup1)}>like</button>
-          {this.state.profileunlock ?<button onClick={() => this.insertRound4(1, this.state.round3matchup1)}>Winner</button>: null}
+          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(1, this.state.round3matchup1)}>Like</button>
+          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound4(1, this.state.round3matchup1)}>Winner</button>: null}
           <ReactAudioPlayer src={this.state.round3matchup1.profile1songlink} controls/>
           </div> <br/> <br/>
-          <div>
+          <div className="container songListRow rcorners">
           <div>Profile: {this.state.round3matchup1.profile2name}</div>
           <div>Song Submission: {this.state.round3matchup1.profile2songname}</div>
           <div>Votes: {this.state.round3matchup1.profile2count}</div>
-          <button onClick={() => this.voteSubmission(2, this.state.round3matchup1)}>like</button>
-          {this.state.profileunlock ?<button onClick={() => this.insertRound4(2, this.state.round3matchup1)}>Winner</button>: null}
+          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(2, this.state.round3matchup1)}>Like</button>
+          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound4(2, this.state.round3matchup1)}>Winner</button>: null}
           <ReactAudioPlayer src={this.state.round3matchup1.profile2songlink} controls/>
-          <h1>WINNER: {this.state.winner}</h1>
           </div> <br/> <br/>
+          <h1>WINNER: {this.state.winner}</h1>
         </div>
     )
   }

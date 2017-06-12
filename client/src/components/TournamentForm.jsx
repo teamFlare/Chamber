@@ -86,10 +86,10 @@ class TournamentForm extends React.Component {
           <input onChange={(e) => this.setState({competitor7: e.target.value})} placeholder='competitor 7 username'></input><br/><br/>
           <input onChange={(e) => this.setState({competitor8: e.target.value})} placeholder='competitor 8 username'></input><br/><br/>
           <input onChange={(e) => this.setState({tournamentdescription: e.target.value})} placeholder='tournament description'></input><br/><br/>
+          <button className=" btn comBut btn-danger" onClick={this.submitTournament}>Submit Tournament (This will clear the previous tournament be careful!)</button>
           <div>Round 1 Beat Submission: <Dropzone onDrop={this.round1Drop}/></div>
           <div>Round 2 Beat Submission: <Dropzone onDrop={this.round2Drop}/></div>
           <div>Round 3 Beat Submission: <Dropzone onDrop={this.round3Drop}/></div><br/><br/>
-          <button onClick={this.submitTournament}>Submit Tournament (This will clear the previous tournament be careful!)</button>
       </div>
     )
   }

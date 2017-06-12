@@ -3,12 +3,8 @@ import axios from 'axios';
 import SongList from './SongList.jsx';
 import Profile from './Profile.jsx';
 import Header from './Header.jsx';
-<<<<<<< HEAD
 import { Link } from 'react-router';
 import Tag from './Tag.jsx'
-=======
-import {Bracket} from 'react-tournament-bracket';
->>>>>>> (feat) add tournament functionality
 
 class AppWithAxios extends React.Component {
   constructor(props) {
@@ -88,24 +84,10 @@ class AppWithAxios extends React.Component {
     }
 
     return (
-<<<<<<< HEAD
       
       <div>  
         <div className="jumbotron jumboPic"></div>         
         <Tag newSongs={this.state.newSongs} topBeats={this.state.topBeats} topCollabs={this.state.topCollabs}/>
-=======
-      <div>
-        <Header/>
-        <Bracket game={{name: 'nik', scheduled: 8, sides: {name: 'john'}}}/>
-        <div className='container-fluid'>
-          <button 
-            className='btn btn-danger pull-right' 
-            onClick={this.handleDisplayChange}>
-            Upload Song
-          </button>
-         </div>
-         <PageToDisplay songs={this.state.songs}/>
->>>>>>> (feat) add tournament functionality
       </div>
     )
   }

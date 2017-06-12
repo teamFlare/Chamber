@@ -4290,7 +4290,7 @@ react-redux@^5.0.5:
     loose-envify "^1.1.0"
     prop-types "^15.5.10"
 
-react-router-redux@^4.1.8:
+react-router-redux@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/react-router-redux/-/react-router-redux-4.0.8.tgz#227403596b5151e182377dab835b5d45f0f8054e"
 
@@ -4317,7 +4317,6 @@ react-tabs@^1.0.0:
     classnames "^2.2.0"
     prop-types "^15.5.0"
 
-react@^15.4.2:
 react-tournament-bracket@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-tournament-bracket/-/react-tournament-bracket-0.1.0.tgz#ebfb966b7ff5cf7d92b5578879be56448a744618"
@@ -4343,7 +4342,6 @@ react-tournament-bracket@^0.1.0:
     webpack "^1.14.0"
 
 react@^15.4.1, react@^15.4.2:
->>>>>>> (feat) add tournament functionality
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
   dependencies:

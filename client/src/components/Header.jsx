@@ -19,7 +19,7 @@ class Header extends React.Component {
           <ul className="nav navbar-nav navbar-right">
             <li><Link to='/'>Discover Sounds</Link></li>
             <li><Link to='/profile'>Profile</Link></li>
-            <li><Link to='/not_yet_set'>Tournaments</Link></li>
+            <li><Link to='/tournaments'>Tournaments</Link></li>
             <li><a href='/logout' className="navBarLinkEnd">Logout</a></li>
          </ul>      
         </nav>
