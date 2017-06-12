@@ -18,7 +18,7 @@ handleSongPick(song) {
 					this.props.songs.map((song)=>{
 						return (
 							<div>
-								<SongEntry key={song.submission_id} myName={this.props.myName} song={song} />
+								<SongEntry song={song} />
 							</div>
 						)})
 				}

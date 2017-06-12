@@ -2,8 +2,8 @@ const models = require('../../db/models');
 const knex = require('knex')(require('../../knexfile'));
 const db = require('../../db/index');
 
-module.exports.getSongs = (req, res) => {
-  db.getSongsFromDb(function(response, error) {
+module.exports.getNewSongs = (req, res) => {
+  db.getNewSongsFromDb(function(response, error) {
     if (error) {
       console.log('Error! getSongs inside controllers/topBeats', error);
     } else {

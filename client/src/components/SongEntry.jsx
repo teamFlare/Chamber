@@ -61,9 +61,9 @@ class SongEntry extends React.Component {
   }
 
   render() {
+    let usrPic = this.props.song.display?this.props.song.display:this.props.myName;
 		return (
-			<div className="container songListRow">	
-	
+			<div className="container songListRow rcorners">		
         <div className="row">
 					<h3 className="songTitle">{this.props.song.name}</h3>
 				</div>	
@@ -75,9 +75,8 @@ class SongEntry extends React.Component {
 					<button className="btn comBut btn-info" href="#">  
 						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
 					</button>
-          <p className="songCreator">By {this.props.song.display}</p>
+          <p className="songCreator">By {usrPic}</p>
 				</div>
-
 				{/*<div>
 					<input onChange={this.handleCommentTyping}></input>
 					<button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
@@ -88,9 +87,8 @@ class SongEntry extends React.Component {
 						{this.state.comments.map((comment) => {
 							return <div className="card">{comment.comment}</div>
 						})}
-				</div>*/}
-			
-</div>
+				</div>*/}			
+      </div>
 
  		)
   }

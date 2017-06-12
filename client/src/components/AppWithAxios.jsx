@@ -4,34 +4,66 @@ import SongList from './SongList.jsx';
 import Profile from './Profile.jsx';
 import Header from './Header.jsx';
 import { Link } from 'react-router';
+import Tag from './Tag.jsx'
 
 class AppWithAxios extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      songs: [],
-      pageToDisplay: 'SongList'
+      topBeats: [],
+      topCollabs: [],
+      newSongs: [],
+      pageToDisplay: 'Profile'
     }
-    this.getSongs = this.getSongs.bind(this);
+    this.getTopSongs = this.getTopSongs.bind(this);
+    this.getTopCollabs = this.getTopCollabs.bind(this);
+    this.getNewSongs = this.getNewSongs.bind(this);
     this.handleDisplayChange = this.handleDisplayChange.bind(this);
   }
 
   componentDidMount() {
-    this.getSongs();
+    this.getTopSongs();
+    this.getTopCollabs();
+    this.getNewSongs();
   }
 
-  getSongs() {
+  getTopSongs() {
     axios.get('/api/topBeats')
       .then((results) => {
         this.setState({
-          songs: results.data
+          topBeats: results.data
         })
       })
       .catch((error) => {
         console.log('Error! getSongs on AppWithAxios.jsx', error);
       })
   }
+
+  getTopCollabs() {
+    axios.get('/api/topCollabs')
+      .then((results) => { 
+        this.setState({
+          topCollabs: results.data
+        })
+      })
+      .catch((error) => {
+        console.log('Error! getSongs on AppWithAxios.jsx', error);
+      })
+  }
+
+    getNewSongs() {
+    axios.get('/api/newSongs')
+      .then((results) => { 
+        this.setState({
+          newSongs: results.data
+        })
+      })
+      .catch((error) => {
+        console.log('Error! getSongs on AppWithAxios.jsx', error);
+      })
+  }
+  
 
   handleDisplayChange() {
     let display = this.state.pageToDisplay;
@@ -52,15 +84,10 @@ class AppWithAxios extends React.Component {
     }
 
     return (
-      <div>
-        <div className='container-fluid'>           
-          <button 
-            className='btn btn-danger pull-right' 
-            onClick={this.handleDisplayChange}>
-            Upload Song
-          </button>
-         </div>
-         <PageToDisplay songs={this.state.songs}/>
+      
+      <div>  
+        <div className="jumbotron jumboPic"></div>         
+        <Tag newSongs={this.state.newSongs} topBeats={this.state.topBeats} topCollabs={this.state.topCollabs}/>
       </div>
     )
   }
