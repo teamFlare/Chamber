@@ -28,24 +28,20 @@ class Profile extends React.Component {
     superagent.post('/upload')   
     .attach('theseNamesMustMatch', files[0])
     .end((err, res) => {
-      if (err) { console.log(err, "hey bro thieres a huge error"); }
+      if (err) { console.log(err, "Error! onDrop in Profile.jsx"); }
       alert('File uploaded!');
     });
   }
 
   componentDidMount() {
- 
     this.getRandomImage();
     this.getUserInfo();
-    this.getUserSongs();
-  
-  
+    this.getUserSongs(this.props.params.song_id);
   }
 
   getRandomImage() {
       axios.get('https://randomuser.me/api/')
       .then((response) => {
-        console.log("This is the image response", response);
 				this.setState({userImage: response.data.results[0].picture.large})
       })
       .catch((err) => {
@@ -57,19 +53,16 @@ class Profile extends React.Component {
       axios.get('/loginInfo')
       .then((response) => {
         this.setState({userName: response.data.display});
-        // this.getUserSongs();
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  getUserSongs() {
-    axios.get('/userSongs')
+  getUserSongs(song_id) {
+    axios.get('/userSongs/'+ song_id)
     .then((response) => {
-      console.log("USER DATA RESPONSE:", response)
       this.setState({userSongs: response.data});
-      console.log(this.state.userSongs, "USER SONGS");
     })
     .catch((error) => {
       console.log(error);

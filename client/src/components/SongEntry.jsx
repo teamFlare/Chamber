@@ -26,7 +26,6 @@ class SongEntry extends React.Component {
 
 
   handleVoteClick(collab_id) {
-    console.log('collab_id', collab_id);
     axios.post('/api/voteClick', {collaboration_id: collab_id})
       .then(result => console.log(result))
       .catch(error => console.log('Error! inside handleVoteClick AppWithAxios', error))
