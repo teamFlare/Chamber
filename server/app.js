@@ -100,34 +100,21 @@ app.get('/loginInfo', (req, res) => {
   res.send(req.user);
 });
 
-app.get('/userSongs', (req, res) => {
-  // db.getSingleUserSongs(req.user.id, (err, results)=>{
-  //   if(err){
-  //     res.send("Error getting single user data", err);
-  //   }
-  //   res.status(200).send("We got the da")
-  // })
-  knex('submissions').where({profiles_id: req.user.id})
-        .then((response) => {
-            // console.log(response)
-            console.log("Getting user DATA!!", response);
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            console.log("Getting single user data failed!", error)
-            res.status(500).send("Database update failed!");
-        })
+app.get('/userSongs/:song_id', (req, res) => {
+  let profileId = req.params.song_id === 'undefined' ? req.user.id : req.params.song_id;
+  var orderedQuery = knex.select('submission_id').count('submission_id').from('likes').groupBy('submission_id').orderByRaw('count(submission_id) desc').as('orderedTable');
+  var topBeats = knex(orderedQuery).innerJoin('submissions', 'orderedTable.submission_id', '=', 'submissions.id').where({'profiles_id': profileId}).as('topbeatTable');
+
+  knex(topBeats).innerJoin('profiles', 'topbeatTable.profiles_id', '=', 'profiles.id').orderBy('topbeatTable.count', 'desc')
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      // console.log(error)
+      res.status(500).send(error);
+    })
 });
 
-// app.get('/api/songs', function (req, res) {
-//   knex.select().table('submissions')
-//   .then((songs)=>{
-//     res.send(songs);
-//   })
-//   .catch((err)=>{
-//     console.log(err);
-//   });
-// });
 app.post('/uploadround1', upload.single('theseNamesMustMatch'), (req, res) => {
   // req.file is the 'theseNamesMustMatch' file
   console.log(req.file);
