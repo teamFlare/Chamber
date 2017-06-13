@@ -12,6 +12,15 @@ var cors = require('cors');
 var db = require('../db/index.js');
 const knex = require('knex')(require('../knexfile.js'));
 
+//modularized stuff 
+const round1matchup1 = require('./routes/round1matchup1');
+const round1matchup2 = require('./routes/round1matchup2');
+const round1matchup3 = require('./routes/round1matchup3');
+const round1matchup4 = require('./routes/round1matchup4');
+const round2matchup1 = require('./routes/round2matchup1');
+const round2matchup2 = require('./routes/round2matchup2');
+const round3matchup1 = require('./routes/round3matchup1');
+
 
 const app = express();
 
@@ -298,76 +307,15 @@ app.post('/uploadround3', upload.single('theseNamesMustMatch'), (req, res) => {
 });
 
 app.get('/round1matchup1', function (req, res) {
-  var tournamentQuery = knex.table('tournaments').innerJoin('round1', 'tournaments.round1_id', '=', 'round1.id').select('*','tournaments.name as tournamentname').as('tournamentTable');
-  var matchup1Query = knex(tournamentQuery).innerJoin('matchup', 'matchup.id', '=', 'tournamentTable.matchup_id1').as('matchup1Table');
-  var matchup1Profile1Query = knex(matchup1Query).join('profiles', 'matchup1Table.prof_id1','=', 'profiles.id').select('*','profiles.display as profile1name').as('matchup1profile1Table');
-  var profile1songQuery = knex(matchup1Profile1Query).join('submissions', 'submissions.id','=', 'matchup1profile1Table.song_id1').select('*','submissions.name as profile1songname', 'submissions.link as profile1songlink', 'submissions.id as profile1songid').as('profile1songTable');
-  var matchup1Profile2Query = knex(profile1songQuery).join('profiles', 'profile1songTable.prof_id2','=', 'profiles.id').select('*','profiles.display as profile2name').as('matchup1profile2Table');
-  var profile2songQuery = knex(matchup1Profile2Query).join('submissions', 'submissions.id','=', 'matchup1profile2Table.song_id2').select('*','submissions.name as profile2songname', 'submissions.link as profile2songlink', 'submissions.id as profile2songid').as('profile2songTable');
-  knex(profile2songQuery).join('submissions', 'submissions.id', '=', 'profile2songTable.round1_beat').select('*', 'submissions.link as roundbeatlink', 'submissions.name as roundbeatname')
-    .then((songs)=>{
-        knex.count('submission_id as profile1votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id1})
-          .then((prof1count) => {songs[0].profile1count = prof1count[0].profile1votecount;
-              knex.count('submission_id as profile2votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id2})
-                  .then((prof2count) => {
-                      songs[0].profile2count = prof2count[0].profile2votecount;
-                      res.send(songs)
-                  })
-                  .catch((error) => console.log(error))
-          }
-          )
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  round1matchup1(req,res);
 });
 
 app.get('/round1matchup2', function (req, res) {
-  var tournamentQuery = knex.table('tournaments').innerJoin('round1', 'tournaments.round1_id', '=', 'round1.id').select('*','tournaments.name as tournamentname').as('tournamentTable');
-  var matchup1Query = knex(tournamentQuery).innerJoin('matchup', 'matchup.id', '=', 'tournamentTable.matchup_id2').as('matchup1Table');
-  var matchup1Profile1Query = knex(matchup1Query).join('profiles', 'matchup1Table.prof_id1','=', 'profiles.id').select('*','profiles.display as profile1name').as('matchup1profile1Table');
-  var profile1songQuery = knex(matchup1Profile1Query).join('submissions', 'submissions.id','=', 'matchup1profile1Table.song_id1').select('*','submissions.name as profile1songname', 'submissions.link as profile1songlink', 'submissions.id as profile1songid').as('profile1songTable');
-  var matchup1Profile2Query = knex(profile1songQuery).join('profiles', 'profile1songTable.prof_id2','=', 'profiles.id').select('*','profiles.display as profile2name').as('matchup1profile2Table');
-  var profile2songQuery = knex(matchup1Profile2Query).join('submissions', 'submissions.id','=', 'matchup1profile2Table.song_id2').select('*','submissions.name as profile2songname', 'submissions.link as profile2songlink', 'submissions.id as profile2songid').as('profile2songTable')
-    .then((songs)=>{
-        knex.count('submission_id as profile1votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id1})
-          .then((prof1count) => {songs[0].profile1count = prof1count[0].profile1votecount;
-              knex.count('submission_id as profile2votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id2})
-                  .then((prof2count) => {
-                      songs[0].profile2count = prof2count[0].profile2votecount;
-                      res.send(songs)
-                  })
-                  .catch((error) => console.log(error))
-          }
-          )
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  round1matchup2(req,res);
 });
 
 app.get('/round1matchup3', function (req, res) {
-  var tournamentQuery = knex.table('tournaments').innerJoin('round1', 'tournaments.round1_id', '=', 'round1.id').select('*','tournaments.name as tournamentname').as('tournamentTable');
-  var matchup1Query = knex(tournamentQuery).innerJoin('matchup', 'matchup.id', '=', 'tournamentTable.matchup_id3').as('matchup1Table');
-  var matchup1Profile1Query = knex(matchup1Query).join('profiles', 'matchup1Table.prof_id1','=', 'profiles.id').select('*','profiles.display as profile1name').as('matchup1profile1Table');
-  var profile1songQuery = knex(matchup1Profile1Query).join('submissions', 'submissions.id','=', 'matchup1profile1Table.song_id1').select('*','submissions.name as profile1songname', 'submissions.link as profile1songlink', 'submissions.id as profile1songid').as('profile1songTable');
-  var matchup1Profile2Query = knex(profile1songQuery).join('profiles', 'profile1songTable.prof_id2','=', 'profiles.id').select('*','profiles.display as profile2name').as('matchup1profile2Table');
-  var profile2songQuery = knex(matchup1Profile2Query).join('submissions', 'submissions.id','=', 'matchup1profile2Table.song_id2').select('*','submissions.name as profile2songname', 'submissions.link as profile2songlink', 'submissions.id as profile2songid').as('profile2songTable')
-    .then((songs)=>{
-        knex.count('submission_id as profile1votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id1})
-          .then((prof1count) => {songs[0].profile1count = prof1count[0].profile1votecount;
-              knex.count('submission_id as profile2votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id2})
-                  .then((prof2count) => {
-                      songs[0].profile2count = prof2count[0].profile2votecount;
-                      res.send(songs)
-                  })
-                  .catch((error) => console.log(error))
-          }
-          )
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  round1matchup3(req,res);
 });
 
 app.get('/currentuser', function(req, res) {
@@ -375,169 +323,23 @@ app.get('/currentuser', function(req, res) {
 })
 
 app.get('/round1matchup4', function (req, res) {
-  var tournamentQuery = knex.table('tournaments').innerJoin('round1', 'tournaments.round1_id', '=', 'round1.id').select('*','tournaments.name as tournamentname').as('tournamentTable');
-  var matchup1Query = knex(tournamentQuery).innerJoin('matchup', 'matchup.id', '=', 'tournamentTable.matchup_id4').as('matchup1Table');
-  var matchup1Profile1Query = knex(matchup1Query).join('profiles', 'matchup1Table.prof_id1','=', 'profiles.id').select('*','profiles.display as profile1name').as('matchup1profile1Table');
-  var profile1songQuery = knex(matchup1Profile1Query).join('submissions', 'submissions.id','=', 'matchup1profile1Table.song_id1').select('*','submissions.name as profile1songname', 'submissions.link as profile1songlink', 'submissions.id as profile1songid').as('profile1songTable');
-  var matchup1Profile2Query = knex(profile1songQuery).join('profiles', 'profile1songTable.prof_id2','=', 'profiles.id').select('*','profiles.display as profile2name').as('matchup1profile2Table');
-  var profile2songQuery = knex(matchup1Profile2Query).join('submissions', 'submissions.id','=', 'matchup1profile2Table.song_id2').select('*','submissions.name as profile2songname', 'submissions.link as profile2songlink', 'submissions.id as profile2songid').as('profile2songTable')
-    .then((songs)=>{
-        knex.count('submission_id as profile1votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id1})
-          .then((prof1count) => {songs[0].profile1count = prof1count[0].profile1votecount;
-              knex.count('submission_id as profile2votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id2})
-                  .then((prof2count) => {
-                      songs[0].profile2count = prof2count[0].profile2votecount;
-                      res.send(songs)
-                  })
-                  .catch((error) => console.log(error))
-          }
-          )
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  round1matchup4(req,res);
 });
 
 app.get('/round2matchup1', function (req, res) {
-  var tournamentQuery = knex.table('tournaments').innerJoin('round2', 'tournaments.round2_id', '=', 'round2.id').select('*','tournaments.name as tournamentname').as('tournamentTable');
-  var matchup1Query = knex(tournamentQuery).innerJoin('matchup', 'matchup.id', '=', 'tournamentTable.matchup_id1').as('matchup1Table');
-  var matchup1Profile1Query = knex(matchup1Query).join('profiles', 'matchup1Table.prof_id1','=', 'profiles.id').select('*','profiles.display as profile1name').as('matchup1profile1Table');
-  var profile1songQuery = knex(matchup1Profile1Query).join('submissions', 'submissions.id','=', 'matchup1profile1Table.song_id1').select('*','submissions.name as profile1songname', 'submissions.link as profile1songlink', 'submissions.id as profile1songid').as('profile1songTable');
-  var matchup1Profile2Query = knex(profile1songQuery).join('profiles', 'profile1songTable.prof_id2','=', 'profiles.id').select('*','profiles.display as profile2name').as('matchup1profile2Table');
-  var profile2songQuery = knex(matchup1Profile2Query).join('submissions', 'submissions.id','=', 'matchup1profile2Table.song_id2').select('*','submissions.name as profile2songname', 'submissions.link as profile2songlink', 'submissions.id as profile2songid').as('profile2songTable');
-  knex(profile2songQuery).join('submissions', 'submissions.id', '=', 'profile2songTable.round2_beat').select('*', 'submissions.link as roundbeatlink', 'submissions.name as roundbeatname')
-    .then((songs)=>{
-        knex.count('submission_id as profile1votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id1})
-          .then((prof1count) => {songs[0].profile1count = prof1count[0].profile1votecount;
-              knex.count('submission_id as profile2votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id2})
-                  .then((prof2count) => {
-                      songs[0].profile2count = prof2count[0].profile2votecount;
-                      res.send(songs)
-                  })
-                  .catch((error) => console.log(error))
-          }
-          )
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  round2matchup1(req,res);
 });
 
 app.get('/round2matchup2', function (req, res) {
-  var tournamentQuery = knex.table('tournaments').innerJoin('round2', 'tournaments.round2_id', '=', 'round2.id').select('*','tournaments.name as tournamentname').as('tournamentTable');
-  var matchup1Query = knex(tournamentQuery).innerJoin('matchup', 'matchup.id', '=', 'tournamentTable.matchup_id2').as('matchup1Table');
-  var matchup1Profile1Query = knex(matchup1Query).join('profiles', 'matchup1Table.prof_id1','=', 'profiles.id').select('*','profiles.display as profile1name').as('matchup1profile1Table');
-  var profile1songQuery = knex(matchup1Profile1Query).join('submissions', 'submissions.id','=', 'matchup1profile1Table.song_id1').select('*','submissions.name as profile1songname', 'submissions.link as profile1songlink', 'submissions.id as profile1songid').as('profile1songTable');
-  var matchup1Profile2Query = knex(profile1songQuery).join('profiles', 'profile1songTable.prof_id2','=', 'profiles.id').select('*','profiles.display as profile2name').as('matchup1profile2Table');
-  var profile2songQuery = knex(matchup1Profile2Query).join('submissions', 'submissions.id','=', 'matchup1profile2Table.song_id2').select('*','submissions.name as profile2songname', 'submissions.link as profile2songlink', 'submissions.id as profile2songid').as('profile2songTable')
-    .then((songs)=>{
-        knex.count('submission_id as profile1votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id1})
-          .then((prof1count) => {songs[0].profile1count = prof1count[0].profile1votecount;
-              knex.count('submission_id as profile2votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id2})
-                  .then((prof2count) => {
-                      songs[0].profile2count = prof2count[0].profile2votecount;
-                      res.send(songs)
-                  })
-                  .catch((error) => console.log(error))
-          }
-          )
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  round2matchup2(req,res);
 });
 
 app.get('/round3matchup1', function (req, res) {
-  var tournamentQuery = knex.table('tournaments').innerJoin('round3', 'tournaments.round3_id', '=', 'round3.id').select('*','tournaments.name as tournamentname').as('tournamentTable');
-  var matchup1Query = knex(tournamentQuery).innerJoin('matchup', 'matchup.id', '=', 'tournamentTable.matchup_id1').as('matchup1Table');
-  var matchup1Profile1Query = knex(matchup1Query).join('profiles', 'matchup1Table.prof_id1','=', 'profiles.id').select('*','profiles.display as profile1name').as('matchup1profile1Table');
-  var profile1songQuery = knex(matchup1Profile1Query).join('submissions', 'submissions.id','=', 'matchup1profile1Table.song_id1').select('*','submissions.name as profile1songname', 'submissions.link as profile1songlink', 'submissions.id as profile1songid').as('profile1songTable');
-  var matchup1Profile2Query = knex(profile1songQuery).join('profiles', 'profile1songTable.prof_id2','=', 'profiles.id').select('*','profiles.display as profile2name').as('matchup1profile2Table');
-  var profile2songQuery = knex(matchup1Profile2Query).join('submissions', 'submissions.id','=', 'matchup1profile2Table.song_id2').select('*','submissions.name as profile2songname', 'submissions.link as profile2songlink', 'submissions.id as profile2songid').as('profile2songTable');
-  knex(profile2songQuery).join('submissions', 'submissions.id', '=', 'profile2songTable.round3_beat').select('*', 'submissions.link as roundbeatlink', 'submissions.name as roundbeatname')
-    .then((songs)=>{
-        knex.count('submission_id as profile1votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id1})
-          .then((prof1count) => {songs[0].profile1count = prof1count[0].profile1votecount;
-              knex.count('submission_id as profile2votecount').groupBy('submission_id').from('likes').where({'submission_id': songs[0].song_id2})
-                  .then((prof2count) => {
-                      songs[0].profile2count = prof2count[0].profile2votecount;
-                      res.send(songs)
-                  })
-                  .catch((error) => console.log(error))
-          }
-          )
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  round3matchup1(req,res);
 });
 
 app.post('/submitTournament', function(req,res) {
-  knex('matchup').del()
-    .then(() => {
-        knex.select('id').from('profiles').where({'display': req.body.competitor1})
-        .then((first) => {
-          knex.select('id').from('profiles').where({'display': req.body.competitor2})
-            .then((second) => {
-              knex('matchup').insert({'id': 1,'name': 'placeholder', 'prof_id1': first[0].id, 'prof_id2': second[0].id, 'song_id1': 1, 'song_id2': 1})
-                .then(() => {
-                    knex.select('id').from('profiles').where({'display': req.body.competitor3})
-                      .then((first) => {
-                        knex.select('id').from('profiles').where({'display': req.body.competitor4})
-                          .then((second) => {
-                            knex('matchup').insert({'id': 2,'name': 'placeholder', 'prof_id1': first[0].id, 'prof_id2': second[0].id, 'song_id1': 1, 'song_id2': 1})
-                              .then(() => {
-                                  knex.select('id').from('profiles').where({'display': req.body.competitor5})
-                                    .then((first) => {
-                                      knex.select('id').from('profiles').where({'display': req.body.competitor6})
-                                        .then((second) => {
-                                          knex('matchup').insert({'id': 3,'name': 'placeholder', 'prof_id1': first[0].id, 'prof_id2': second[0].id, 'song_id1': 1, 'song_id2': 1})
-                                            .then(() => {
-                                                knex.select('id').from('profiles').where({'display': req.body.competitor7})
-                                                  .then((first) => {
-                                                    knex.select('id').from('profiles').where({'display': req.body.competitor8})
-                                                      .then((second) => {
-                                                        knex('matchup').insert({'id': 4, 'name': 'placeholder', 'prof_id1': first[0].id, 'prof_id2': second[0].id, 'song_id1': 1, 'song_id2': 1})
-                                                          .then(() => {
-                                                              knex('round1').del()
-                                                                .then(() => {
-                                                                  knex('round1').insert({'id': 1,'name': 'placeholder','matchup_id1': 1, 'matchup_id2': 2, 'matchup_id3': 3, 'matchup_id4': 4, 'round1_beat': 1})
-                                                                    .then(() => {
-                                                                      knex('tournaments').del()
-                                                                        .then(() => {
-                                                                          knex('tournaments').insert({'id': 1, 'name': req.body.tournamentname, 'round1_id': 1, 'description': req.body.tournamentdescription})
-                                                                            .then(() => {
-                                                                                knex('round2').del()
-                                                                                  .then(() => {
-                                                                                    knex('round3').del()
-                                                                                      .then(() => {
-                                                                                        knex('likes').insert({'submission_id': 1})
-                                                                                          .then(() => res.send('worked'))
-                                                                                      }) 
-                                                                                  })
-                                                                            })
-                                                                        })
-                                                                    })
-                                                                    .catch((error) => console.log(error))
-                                                                })
-                                                                .catch((error) => console.log(error))
-                                                          })
-                                                          .catch((error) => console.log(error))
-                                                      })
-                                                  })
-                                            })
-                                            .catch((error) => console.log(error))
-                                        })
-                                    })
-                              })
-                              .catch((error) => console.log(error))
-                          })
-                      })
-                })
-                .catch((error) => console.log(error))
-            })
-        })
-  })
+  submitTournament(req,res);
 })
 
 app.post('/insertRound21', function(req,res) {
@@ -595,5 +397,4 @@ app.post('/round3post', function(req,res) {
     })
     .catch((error) => console.log(error))
 })
-
 module.exports = app;

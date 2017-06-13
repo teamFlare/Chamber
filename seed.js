@@ -24,7 +24,7 @@ for(var i = 0;i < Likes.length;i++){
 }
 
 for(var i = 0;i < Comments.length;i++){
-  knex('likes').insert({profiles_id: Comments[i].profiles_id, comment: Comments[i].comment, submission_id: Comments[i].submission_id})
+  knex('comments').insert({profiles_id: Comments[i].profiles_id, comment: Comments[i].comment, submission_id: Comments[i].submission_id})
     .then(result => console.log(result))
     .catch(error => console.log(error))
 }
