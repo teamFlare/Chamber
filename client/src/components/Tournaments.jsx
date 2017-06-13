@@ -34,7 +34,7 @@ class Tournaments extends React.Component {
     axios.get('/currentuser')
       .then((response) => {
         console.log(response.data)
-        if(response.data.display === 'Nikhil Mehta' || response.data.display === 'Prateek Bhatt' || response.data.display === 'Steve Chang') {
+        if(response.data.display === 'Nikhil Mehta' || response.data.display === 'Sim K' || response.data.display === 'Prateek Bhatt' || response.data.display === 'Steve Chang') {
           this.setState({profileunlock: true})
         }
       })

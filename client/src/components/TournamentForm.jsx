@@ -4,6 +4,28 @@ import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
 import Dropzone from 'react-dropzone';
 import superagent from 'superagent';
+import ReactSuperSelect from 'react-super-select';
+
+var handlerExample = function(option) {
+  var output = [
+    'Option Item Chosen = {\n',
+    '\tid: ', option.id, '\n',
+    '\tname: ', option.name, '\n',
+    '\tsize: ', option.size, '\n\t};'];
+  console.log(output.join(''));
+};
+var testData = [
+{
+  "id": "5507c0528152e61f3c348d56",
+  "name": "elit laborum et",
+  "size": "Large"
+},
+{
+  "id": "5507c0526305bceb0c0e2c7a",
+  "name": "dolor nulla velit",
+  "size": "Medium"
+}
+];
 
 class TournamentForm extends React.Component {
   constructor(props) {
@@ -26,7 +48,9 @@ class TournamentForm extends React.Component {
     this.round2Drop = this.round2Drop.bind(this);
     this.round3Drop = this.round3Drop.bind(this);
   }
-
+  componentWillMount() {
+    //axios.get('/profiles')
+  }
   submitTournament() {
     axios.post('/submitTournament', {tournamentname: this.state.tournamentname,
       competitor1: this.state.competitor1,
@@ -77,6 +101,9 @@ class TournamentForm extends React.Component {
           <h5>To submit a new tournament: FIRST: fill out the form with text NEXT: click the submit button at the bottom of the page LAST: drop in the beats for the 3 rounds</h5>
           <h6>Ensure you are ready to clear the previous tournament and create a new one before touching this form</h6>
           <input onChange={(e) => this.setState({tournamentname: e.target.value})} placeholder='tournament name'></input><br/><br/>
+          <ReactSuperSelect placeholder="Make a Selection" 
+                  dataSource={testData} 
+                  onChange={handlerExample} /><br/>
           <input onChange={(e) => this.setState({competitor1: e.target.value})} placeholder='competitor 1 username'></input><br/><br/>
           <input onChange={(e) => this.setState({competitor2: e.target.value})} placeholder='competitor 2 username'></input><br/><br/>
           <input onChange={(e) => this.setState({competitor3: e.target.value})} placeholder='competitor 3 username'></input><br/><br/>
