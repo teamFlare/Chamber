@@ -5,7 +5,7 @@ const db = require('../../db/index');
 module.exports.getTopCollabs = (req, res) => {
   db.getTopCollabsFromDb(function(response, error) {
     if (error) {
-      console.log('Error! getSongs inside controllers/topBeats', error);
+      console.log('Error! getSongs inside controllers/topCollabs', error);
     } else {
       res.status(200).send(response);
     }
