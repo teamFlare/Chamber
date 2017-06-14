@@ -41,13 +41,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 AWS.config.update(
   {
-<<<<<<< 4d463e23dd5fc241f46659669d79d3e5ef79c6d4
     accessKeyId: AWSkey.accessKeyId,
     secretAccessKey: AWSkey.secretAccessKey
-=======
-    accessKeyId: 'AKIAJX7ZBUNPR45SNWQA',
-    secretAccessKey: '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',
->>>>>>> (feat) Set up single-song page.
     // region: 'us-west-2'
   });
   
