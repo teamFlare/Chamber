@@ -8,7 +8,6 @@
 // from that point forward, react will do everything it needs to do
 
 function posts(state = [], action) {
-  console.log(state, action);
   return state;
 }
 
