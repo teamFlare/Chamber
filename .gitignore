@@ -5,3 +5,4 @@ config/production.json
 config/test.json
 dump.rdb
 .DS_Store
+config/awskey.json
