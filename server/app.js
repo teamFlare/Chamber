@@ -64,11 +64,7 @@ app.use('/api/newSongs', routes.newSongs);
 app.use('/api/comment', routes.commentClick);
 app.use('/api/commentRender', routes.commentRender);
 
-
-
 app.post('/upload', upload.single('theseNamesMustMatch'), (req, res) => {
-  // req.file is the 'theseNamesMustMatch' file
-  console.log(req.file);
   var params = {
     Bucket: 'elasticsongstalk', 
     Body: req.file.buffer,
@@ -76,18 +72,21 @@ app.post('/upload', upload.single('theseNamesMustMatch'), (req, res) => {
     ACL: 'public-read-write', // your permisions 
   };
   s3.upload(params, (err, data) => {
-    if(err){
+    if (err) {
       console.log("ERRRORORR", err);
       res.status(500).send("We messed up in s3 upload.");
-    // }else{
-    //   res.status(200).send("s3 upload was succexful")
-    // }
-    }else{
+    } else {
       knex('submissions').insert({name: req.file.originalname, profiles_id: req.user.id, type: 'beat', tempo: 98, link: data.Location})
       .then(()=>{
-        console.log("DB UPDATED");
-        res.status(200).send("Database updated!");
-      })
+        knex('submissions').select('id').where({name: req.file.originalname, profiles_id: req.user.id})
+          .then((id) => {
+                knex('likes').insert({'profiles_id': req.user.id, 'submission_id': id[0].id})
+                  .then(() => {
+                    console.log("DB UPDATED");
+                    res.status(200).send("Database updated!");
+                  })
+              })
+          })
       .catch((err)=>{
         console.log("DB FAILED", err);
         res.status(500).send("Database update failed!");
