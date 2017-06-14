@@ -11,6 +11,7 @@ var File = require('file');
 var cors = require('cors');
 var db = require('../db/index.js');
 const knex = require('knex')(require('../knexfile.js'));
+const AWSkey = require('./../config/awskey.json');
 
 //modularized stuff 
 const round1matchup1 = require('./routes/round1matchup1');
@@ -40,8 +41,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 AWS.config.update(
   {
-    accessKeyId: 'AKIAINTNVRLUHO6R3HSQ',
-    secretAccessKey: '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',
+    accessKeyId: AWSkey.accessKeyId,
+    secretAccessKey: AWSkey.secretAccessKey
     // region: 'us-west-2'
   });
   
@@ -96,7 +97,6 @@ app.post('/upload', upload.single('theseNamesMustMatch'), (req, res) => {
 });
 
 app.get('/loginInfo', (req, res) => {
-  console.log(req.user);
   res.send(req.user);
 });
 
