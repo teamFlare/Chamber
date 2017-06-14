@@ -10,7 +10,7 @@ class SongComponent extends React.Component {
     this.state = {
       comment: '',
       comments: [],
-      newSong: [],
+      newSong: {},
       numVote: 0,
       numCom: 0
     }
@@ -21,34 +21,38 @@ class SongComponent extends React.Component {
     this.getNewSongs = this.getNewSongs.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getNewSongs(this.props.params.songname);
   }
   
   getNewSongs(song_id) {
-    axios.get('/userSongs/'+song_id)
+    axios.get('/singleSong/'+song_id)
     .then((results) => { 
+      console.log("HEYYY THIS IS THE NEW SHI",results.data)
       this.setState({
-        newSongs: results.data
+        newSong: results.data[0]
       });
-      console.log(this.state.newSongs);
+      this.setState({numVote: parseInt(this.state.newSong.count)});
       this.getComments();
     })
     .catch((error) => {
-      console.log('Error! getSongs on SongComponent.jsx', error);
+      console.log('Error! getNewSongs on SongComponent.jsx', error);
     })
-  }
-
-  handleVoteClick(collab_id) {
-    console.log('collab_id', collab_id);
-    axios.post('/api/voteClick', {collaboration_id: collab_id})
-      .then(result => console.log(result))
-      .catch(error => console.log('Error! inside handleVoteClick AppWithAxios', error))
   }
 
   handleCommentTyping(e) {
     e.preventDefault()
     this.setState({comment: e.target.value})
+  }
+
+  handleVoteClick(collab_id) {
+    axios.post('/api/voteClick', {collaboration_id: collab_id})
+      .then((result) => {
+        console.log(this.state.numVote, "NUMBER OF VOTES MIGHT BE IN STRINg");
+        let votePlus = this.state.numVote + 1;
+        this.setState({numVote: votePlus});
+      })
+      .catch((error) => {console.log('Error! inside handleVoteClick AppWithAxios', error)})
   }
 
   handleCommentClick(collab_id) {
@@ -69,16 +73,41 @@ class SongComponent extends React.Component {
       })
   }
 
+  
+
   render() {
-    let songToMap = this.state.newSongs.length>0 ? this.state.newSongs[0] : []
-          return (
-            <div>
-              <h1>SongCom</h1>
-              {this.state.newSongs[0].map(song => {
-                <SongEntry song={songToMap}/>
-                  })}         
-            </div>
-          )
+    return (
+      <div>
+        <h1>SongCom</h1>
+          <div className="container songListRow rcorners">		
+        <div className="row">
+					<h3 className="songTitle">{this.state.newSong.name}</h3>
+				</div>	
+				<div className="row">
+					<ReactAudioPlayer src={this.state.newSong.link ? this.state.newSong.link : this.state.default} controls/>
+					<button className="btn comBut btn-danger" onClick={() =>{ this.handleVoteClick(this.state.newSong.submission_id)}}>  
+						<span className="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Likes {this.state.numVote}
+					</button>
+					<button className="btn comBut btn-info" href="#">  
+						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
+					</button>
+          <p onClick={()=>{this.handleProfileSongClick(this.state.newSong.profiles_id)}}className="songCreator">By {this.state.newSong.display}</p>
+				</div>
+				<div>
+					<input onChange={this.handleCommentTyping}></input>
+					<button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.state.newSong.submission_id)}>submit comment</button>
+				</div>
+				<div>
+					<h1>Comments:</h1>
+					<div >
+						{this.state.comments.map((comment) => {
+							return <div className="card">{comment.comment}</div>
+						})}
+				</div>		
+      </div>  
+      </div>
+      </div>
+    )
   }
 }
 

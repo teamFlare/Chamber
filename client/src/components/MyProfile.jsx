@@ -22,7 +22,6 @@ class Profile extends React.Component {
     this.getRandomImage = this.getRandomImage.bind(this);
     this.getUserInfo = this.getUserInfo.bind(this);
     this.getUserSongs = this.getUserSongs.bind(this);
-    console.log("THESE ARE THE PROPSPSPSPSPSP",this.props);
   }
 
   onDrop(files) {
@@ -36,8 +35,8 @@ class Profile extends React.Component {
 
   componentDidMount() {
     this.getRandomImage();
-    this.getUserInfo(this.props.params.user_id);
-    this.getUserSongs(this.props.params.user_id);
+    this.getUserInfo();
+    this.getUserSongs(this.props.params.song_id);
   }
 
   getRandomImage() {
@@ -50,18 +49,18 @@ class Profile extends React.Component {
       });
   }
 
-  getUserInfo(user_id) {
-      axios.get('/profileName/'+ user_id)
+  getUserInfo() {
+      axios.get('/loginInfo')
       .then((response) => {
-        this.setState({userName: response.data[0].display});
+        this.setState({userName: response.data.display});
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  getUserSongs(user_id) {
-    axios.get('/userSongs/'+ user_id)
+  getUserSongs(song_id) {
+    axios.get('/userSongs/'+ song_id)
     .then((response) => {
       this.setState({userSongs: response.data});
     })
@@ -83,6 +82,7 @@ class Profile extends React.Component {
       ? this.state.current.link
       : 'http://dreamsupport.us/justin/Music/Beyonce%20Lemonade/01%20Pray%20You%20Catch%20Me.mp3';
     
+    let renderThis = this.state.userSongs.length>0 ? <SongList myName={this.state.userName} songs={this.state.userSongs}/> : <NoSongs/>
     return (
       <div className="container-fluid">
 				<div className="jumbotron">
@@ -94,7 +94,10 @@ class Profile extends React.Component {
         <div className="row col-12 userProfileTitle">
           <h1 className="userUploadsTitle">Uploads</h1>
         </div>
-        <SongList myName={this.state.userName} songs={this.state.userSongs}/>
+        {renderThis}
+        <div className="uploadBut">
+          <Link className="linkWithinButton" to="/upload">Upload a Sound</Link>
+				</div>
       </div>
     );
   }
