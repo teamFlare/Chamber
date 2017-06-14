@@ -59,24 +59,6 @@ class SongComponent extends React.Component {
 
   render() {
           return (
-            /*<div>
-            <h3 onClick={this.playSong}>{this.props.song.name}</h3>
-            <ul>
-              <li>Beat Creator: {this.props.song.display}</li>
-              <li>Vote Count: {this.props.song.count}</li>
-            </ul>
-            <button className="vote-button btn btn-warning" onClick={() => this.handleVoteClick(this.props.song.submission_id)}>
-              Like
-            </button>
-            <input onChange={this.handleCommentTyping}></input>
-            <button onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
-            {this.state.playsong ? <ReactAudioPlayer src={this.props.song.link} autoPlay controls/> : null}
-            <div>Comments:
-            {this.state.comments.map((comment) => {
-              return <div>{comment.comment}</div>
-            })}
-            </div>
-            </div>*/
             <div>
               <h1>The Sickness</h1>
             </div>

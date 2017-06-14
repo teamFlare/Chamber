@@ -83,9 +83,6 @@ class Profile extends React.Component {
       : 'http://dreamsupport.us/justin/Music/Beyonce%20Lemonade/01%20Pray%20You%20Catch%20Me.mp3';
     
     let renderThis = this.state.userSongs.length>0 ? <SongList myName={this.state.userName} songs={this.state.userSongs}/> : <NoSongs/>
-    if (this.state.redirect) {
-    return <Redirect push to="/sample" />;
-    }
     return (
       <div className="container-fluid">
 				<div className="jumbotron">

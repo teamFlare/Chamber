@@ -7,11 +7,12 @@ module.exports.voteClick = (req, res) => {
   var votesObject = {};
   votesObject.profile_id = req.user.id;
   votesObject.collabs_id = req.body.collaboration_id;
-  db.postVoteToDb(votesObject, function(response, error) {
-    if (error) {
-      console.log('Error! getSongs inside controllers/postVote', error);
+  db.postVoteToDb(votesObject, function(err, result) {
+    if (err) {
+      console.log('Error! getSongs inside controllers/postVote', err);
+      res.status(500).send("You done messed up voting");
     } else {
-      res.status(200).send('success');
+      res.status(200).send('success: voting', result);
     }
   })
 
