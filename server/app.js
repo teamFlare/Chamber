@@ -99,7 +99,7 @@ app.post('/upload', upload.single('theseNamesMustMatch'), (req, res) => {
 app.post('/api/voteClick', (req,res) => {
   console.log('hit vote click');
   var votesObject = {};
-  votesObject.profile_id = req.user.id;
+  votesObject.profile_id = req.user;
   votesObject.collabs_id = req.body.collaboration_id;
   db.postVoteToDb(votesObject, function(err, result) {
     if (err) {
@@ -114,10 +114,26 @@ app.get('/loginInfo', (req, res) => {
   res.send(req.user);
 });
 
+// app.get('/userSongs/:song_id', (req, res) => {
+//   let profileId = req.params.song_id === 'undefined' ? req.user.id : req.params.song_id;
+//   var orderedQuery = knex.select('submission_id').count('submission_id').from('likes').groupBy('submission_id').orderByRaw('count(submission_id) desc').as('orderedTable');
+//   var topBeats = knex(orderedQuery).innerJoin('submissions', 'orderedTable.submission_id', '=', 'submissions.id').where({'profiles_id': profileId}).as('topbeatTable');
+
+//   knex(topBeats).innerJoin('profiles', 'topbeatTable.profiles_id', '=', 'profiles.id').orderBy('topbeatTable.count', 'desc')
+//     .then((response) => {
+//       res.status(200).send(response);
+//     })
+//     .catch((error) => {
+//       // console.log(error)
+//       res.status(500).send(error);
+//     })
+// });
+
 app.get('/userSongs/:song_id', (req, res) => {
-  let profileId = req.params.song_id === 'undefined' ? req.user.id : req.params.song_id;
+  // let profileId = req.params.song_id === 'undefined' ? req.user.id : req.params.song_id;
+  console.log(req.params);
   var orderedQuery = knex.select('submission_id').count('submission_id').from('likes').groupBy('submission_id').orderByRaw('count(submission_id) desc').as('orderedTable');
-  var topBeats = knex(orderedQuery).innerJoin('submissions', 'orderedTable.submission_id', '=', 'submissions.id').where({'profiles_id': profileId}).as('topbeatTable');
+  var topBeats = knex(orderedQuery).innerJoin('submissions', 'orderedTable.submission_id', '=', 'submissions.id').where({'id': req.params.song_id}).as('topbeatTable');
 
   knex(topBeats).innerJoin('profiles', 'topbeatTable.profiles_id', '=', 'profiles.id').orderBy('topbeatTable.count', 'desc')
     .then((response) => {

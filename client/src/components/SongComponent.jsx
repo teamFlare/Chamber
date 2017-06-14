@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
+import SongEntry from './SongEntry.jsx'
 
 class SongComponent extends React.Component {
   constructor(props) {
@@ -9,19 +10,34 @@ class SongComponent extends React.Component {
     this.state = {
       comment: '',
       comments: [],
-      playsong: false
+      newSong: [],
+      numVote: 0,
+      numCom: 0
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
     this.handleCommentTyping = this.handleCommentTyping.bind(this);
     this.handleCommentClick = this.handleCommentClick.bind(this);
     this.getComments = this.getComments.bind(this);
-    this.playSong = this.playSong.bind(this);
+    this.getNewSongs = this.getNewSongs.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.getComments();
-  // }
-
+  componentWillMount() {
+    this.getNewSongs(this.props.params.songname);
+  }
+  
+  getNewSongs(song_id) {
+    axios.get('/userSongs/'+song_id)
+    .then((results) => { 
+      this.setState({
+        newSongs: results.data
+      });
+      console.log(this.state.newSongs);
+      this.getComments();
+    })
+    .catch((error) => {
+      console.log('Error! getSongs on SongComponent.jsx', error);
+    })
+  }
 
   handleVoteClick(collab_id) {
     console.log('collab_id', collab_id);
@@ -42,7 +58,7 @@ class SongComponent extends React.Component {
   }
 
   getComments() {
-    axios.get('/api/commentRender', {params: {collab_id: this.props.song.submission_id}})
+    axios.get('/api/commentRender', {params: {collab_id: this.state.newSong.submission_id}})
       .then((results) => {
         this.setState({
           comments: results.data
@@ -53,14 +69,14 @@ class SongComponent extends React.Component {
       })
   }
 
-  playSong() {
-    this.setState({playsong: !this.state.playsong});
-  }
-
   render() {
+    let songToMap = this.state.newSongs.length>0 ? this.state.newSongs[0] : []
           return (
             <div>
-              <h1>The Sickness</h1>
+              <h1>SongCom</h1>
+              {this.state.newSongs[0].map(song => {
+                <SongEntry song={songToMap}/>
+                  })}         
             </div>
           )
   }
