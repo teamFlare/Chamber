@@ -25,7 +25,6 @@ class Tag extends React.Component {
    
 	openCity(evt, cityName) {
     // Declare all variables
-       console.log("This should be active EVENT->", evt)
     var i, tabcontent, tablinks;
 
     // Get all elements with class="tabcontent" and hide them
