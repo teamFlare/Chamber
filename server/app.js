@@ -60,7 +60,7 @@ app.use('/api/profiles', routes.profiles);
 app.use('/api/topBeats', routes.topBeats);
 app.use('/api/topCollabs', routes.topCollabs);
 app.use('/api/newSongs', routes.newSongs);
-app.use('/api/voteClick', routes.voteClick);
+// app.use('/api/voteClick', routes.voteClick);
 app.use('/api/comment', routes.commentClick);
 app.use('/api/commentRender', routes.commentRender);
 
@@ -94,6 +94,20 @@ app.post('/upload', upload.single('theseNamesMustMatch'), (req, res) => {
       });
     }
   });
+});
+
+app.post('/api/voteClick', (req,res) => {
+  console.log('hit vote click');
+  var votesObject = {};
+  votesObject.profile_id = req.user.id;
+  votesObject.collabs_id = req.body.collaboration_id;
+  db.postVoteToDb(votesObject, function(err, result) {
+    if (err) {
+      console.log('Error! getSongs inside controllers/postVote in APP', err);
+      res.status(500).send("You done messed up voting");
+    } 
+      res.status(200).send("sending useless send");
+  })
 });
 
 app.get('/loginInfo', (req, res) => {

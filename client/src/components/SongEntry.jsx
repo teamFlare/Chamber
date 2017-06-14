@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
+import { Redirect, browserHistory } from 'react-router';
 
 class SongEntry extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class SongEntry extends React.Component {
       comment: '',
       comments: [],
       playsong: false, 
-			numCom: ''
+			numVote: 0,
+      redirect: false
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
     this.handleCommentTyping = this.handleCommentTyping.bind(this);
@@ -22,13 +24,18 @@ class SongEntry extends React.Component {
 
   componentDidMount() {
     this.getComments();
+    this.setState({numVote: this.props.song.count})
   }
 
 
   handleVoteClick(collab_id) {
     axios.post('/api/voteClick', {collaboration_id: collab_id})
-      .then(result => console.log(result))
-      .catch(error => console.log('Error! inside handleVoteClick AppWithAxios', error))
+      .then((result) => {
+        console.log(result);
+        let votePlus = parseInt(this.state.numVote, 10) + 1;
+        this.setState({numVote: votePlus});
+      })
+      .catch((error) => {console.log('Error! inside handleVoteClick AppWithAxios', error)})
   }
 
   handleCommentTyping(e) {
@@ -59,17 +66,21 @@ class SongEntry extends React.Component {
     this.setState({playsong: !this.state.playsong});
   }
 
+  handleSongClick(str) {
+     browserHistory.push('/singleSong/'+str);
+  }
+
   render() {
     let usrPic = this.props.song.display?this.props.song.display:this.props.myName;
 		return (
 			<div className="container songListRow rcorners">		
         <div className="row">
-					<h3 className="songTitle">{this.props.song.name}</h3>
+					<h3 onClick={()=>{this.handleSongClick(this.props.song.submission_id)}} className="songTitle">{this.props.song.name}</h3>
 				</div>	
 				<div className="row">
 					<ReactAudioPlayer src={this.props.song.link ? this.props.song.link : this.state.default} controls/>
-					<button className="btn comBut btn-danger" onClick={() => this.handleVoteClick(this.props.song.submission_id)}>  
-						<span className="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Likes {this.props.song.count}
+					<button className="btn comBut btn-danger" onClick={() =>{ this.handleVoteClick(this.props.song.submission_id)}}>  
+						<span className="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Likes {this.state.numVote}
 					</button>
 					<button className="btn comBut btn-info" href="#">  
 						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}

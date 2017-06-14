@@ -28,7 +28,7 @@ class Profile extends React.Component {
     return (
     	<div className="userProfileTitle">
       	<h1>Upload a Sound</h1>
-        <Dropzone onDrop={()=>{this.onDrop}}/>
+        <Dropzone onDrop={this.onDrop}/>
       </div>
     );
   }
