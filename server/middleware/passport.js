@@ -122,9 +122,9 @@ passport.use('local-login', new LocalStrategy({
 // );
 
 passport.use('google', new GoogleStrategy({
-  clientID: process.env.google_clientid,
-  clientSecret: process.env.google_clientsecret,
-  callbackURL: process.env.google_callbackURL,
+  clientID: process.env.google_clientid || config.passport.Google.clientID,
+  clientSecret: process.env.google_clientsecret || config.passport.Google.clientSecret,
+  callbackURL: process.env.google_callbackURL || config.passport.Google.callbackURL,
   passReqToCallback: true
 },
   (req, accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile(req ,'google', profile, done))

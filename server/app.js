@@ -48,8 +48,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 AWS.config.update(
   {
-    accessKeyId: process.env.s3_key,
-    secretAccessKey: process.env.s3_secret
+    accessKeyId: process.env.s3_key || AWSkey.accessKeyId,
+    secretAccessKey: process.env.s3_secret || AWSkey.secretAccessKey
     // region: 'us-west-2'
   });
   
