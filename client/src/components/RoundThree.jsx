@@ -58,7 +58,7 @@ class RoundThree extends React.Component {
     }
     // this.getRound1Info();
     // this.getRound2Info();
-    // this.getRound3Info();
+    this.getRound3Info();
   }
 
   getRound3Info() {
