@@ -144,6 +144,7 @@ submitRound1() {
     return (
       <div>
           <h2>First Round</h2>
+          <h5>{this.state.round1matchup1.tournamentname}</h5>
           <div className = "songTitle">Round 1 Beat!! {this.state.round1matchup1.roundbeatname} <ReactAudioPlayer src={this.state.round1matchup1.roundbeatlink} controls/></div>
           <h3>First Matchup</h3>
           <div className="container songListRow rcorners">

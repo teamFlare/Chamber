@@ -53,6 +53,7 @@ class SongComponent extends React.Component {
         this.setState({numVote: votePlus});
       })
       .catch((error) => {console.log('Error! inside handleVoteClick AppWithAxios', error)})
+      
   }
 
   handleCommentClick(collab_id) {

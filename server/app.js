@@ -113,6 +113,21 @@ app.get('/loginInfo', (req, res) => {
   res.send(req.user);
 });
 
+app.get('/singleVote', (req, res) => {
+  console.log(req.query.collab_id)
+  var likesQuery = knex.select().from('likes').distinct('profiles_id', 'submission_id').as('likesTable');
+
+  knex.select('submission_id').count('submission_id').from(likesQuery).groupBy('submission_id').orderByRaw('count(submission_id) desc').where({'submission_id': req.query.collab_id}).as('orderedTable')
+    .then((response) => {
+      console.log(response)
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      // console.log(error)
+      res.status(500).send(error);
+    })
+});
+
 app.get('/userSongs/:user_id', (req, res) => {
   let profileId = req.params.user_id === 'undefined' ? req.user.id : req.params.user_id;
 
