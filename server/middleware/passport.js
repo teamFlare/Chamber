@@ -130,24 +130,24 @@ passport.use('google', new GoogleStrategy({
   (req, accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile(req ,'google', profile, done))
 );
 
-passport.use('facebook', new FacebookStrategy({
-  clientID: config.passport.Facebook.clientID,
-  clientSecret: config.passport.Facebook.clientSecret,
-  callbackURL: config.passport.Facebook.callbackURL,
-  profileFields: ['id', 'emails', 'name']
-},
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
-);
+// passport.use('facebook', new FacebookStrategy({
+//   clientID: config.passport.Facebook.clientID,
+//   clientSecret: config.passport.Facebook.clientSecret,
+//   callbackURL: config.passport.Facebook.callbackURL,
+//   profileFields: ['id', 'emails', 'name']
+// },
+//   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
+// );
 
 // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
-passport.use('twitter', new TwitterStrategy({
-  consumerKey: config.passport.Twitter.consumerKey,
-  consumerSecret: config.passport.Twitter.consumerSecret,
-  callbackURL: config.passport.Twitter.callbackURL,
-  userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
-},
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('twitter', profile, done))
-);
+// passport.use('twitter', new TwitterStrategy({
+//   consumerKey: config.passport.Twitter.consumerKey,
+//   consumerSecret: config.passport.Twitter.consumerSecret,
+//   callbackURL: config.passport.Twitter.callbackURL,
+//   userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
+// },
+//   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('twitter', profile, done))
+// );
 
 const getOrCreateOAuthProfile = (req, type, oauthProfile, done) => {
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
