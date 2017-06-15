@@ -24,16 +24,26 @@ class SongEntry extends React.Component {
 
   componentDidMount() {
     this.getComments();
-    this.setState({numVote: this.props.song.count})
+    this.getVotes();
   }
 
+  getVotes() {
+    axios.get('/singleVote', {params: {collab_id: this.props.song.submission_id}})
+      .then((results) => {
+        this.setState({
+					numVote: results.data[0].count
+        })
+      })
+      .catch((error) => {
+        console.log('Error! getSongs on SongEntry.jsx', error);
+      })
+  }
 
   handleVoteClick(collab_id) {
     axios.post('/api/voteClick', {collaboration_id: collab_id})
       .then((result) => {
         console.log(result);
-        let votePlus = parseInt(this.state.numVote, 10) + 1;
-        this.setState({numVote: votePlus});
+        this.getVotes();
       })
       .catch((error) => {console.log('Error! inside handleVoteClick AppWithAxios', error)})
   }

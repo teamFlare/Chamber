@@ -14,7 +14,7 @@ class Tournaments extends React.Component {
     super(props);
     this.state = {
       profileunlock: false,
-      round1boolean: false,
+      round1boolean: true,
       round2boolean: false,
       finalsboolean: false,
       createboolean: false,
