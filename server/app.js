@@ -240,41 +240,47 @@ app.post('/competitorUpload', upload.single('theseNamesMustMatch'), (req, res) =
         profileArray.push(response[i].prof_id2)
       }
     })
+    .catch((error) => console.log(error))
+
   s3.upload(params, (err, data) => {
     if(err){
       console.log("ERRRORORR", err);
       res.status(500).send("We messed up in s3 upload.");
-    // }else{
-    //   res.status(200).send("s3 upload was succexful")
-    // }
-    } else if (req.user.id in profileArray){
-      knex('submissions').insert({name: req.file.originalname, profiles_id: req.user.id, type: 'beat', tempo: 98, link: data.Location})
-      .then((response)=>{
-        // console.log("DB UPDATED NIK YA DONE DID IT BABY", response);
-        knex('submissions').select('id').where({name: req.file.originalname, profiles_id: req.user.id})
-          .then((id) => {
-            knex('matchup').where({'prof_id2': req.user.id}).update({'song_id2': id[0].id})
-              .then(() => {
-                knex('likes').insert({'profiles_id': req.user.id, 'submission_id': id[0].id})
-                  .then(() => console.log('we done did it baby'))
-              })
-            knex('matchup').where({'prof_id1': req.user.id}).update({'song_id1': id[0].id})
-              .then(() => {
-                knex('likes').insert({'profiles_id': req.user.id, 'submission_id': id[0].id})
-                  .then(() => console.log('we done did it baby'))
-              })
-              .catch((error) => {
-                console.log(error)
-              })
-          })
-        res.status(200).send("Database updated!");
-      }) 
-      .catch((err)=>{
-        console.log("DB FAILED", err);
-        res.status(500).send("Database update failed!");
-      });
-    } else {
-        res.status(500).send('not a competitor uploading')
+    } 
+    var check = false;
+    for(var z = 0; z < profileArray.length;z++) {
+      if(profileArray[z] === req.user.id) {
+        check = true;
+      }
+    }
+    if (check){
+        knex('submissions').insert({name: req.file.originalname, profiles_id: req.user.id, type: 'beat', tempo: 98, link: data.Location})
+        .then((response)=>{
+          // console.log("DB UPDATED NIK YA DONE DID IT BABY", response);
+          knex('submissions').select('id').where({name: req.file.originalname, profiles_id: req.user.id})
+            .then((id) => {
+              knex('matchup').where({'prof_id2': req.user.id}).update({'song_id2': id[0].id})
+                .then(() => {
+                  knex('likes').insert({'profiles_id': req.user.id, 'submission_id': id[0].id})
+                    .then(() => console.log('we done did it baby'))
+                })
+              knex('matchup').where({'prof_id1': req.user.id}).update({'song_id1': id[0].id})
+                .then(() => {
+                  knex('likes').insert({'profiles_id': req.user.id, 'submission_id': id[0].id})
+                    .then(() => console.log('we done did it baby'))
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
+            })
+          res.status(200).send("Database updated!");
+        }) 
+        .catch((err)=>{
+          console.log("DB FAILED", err);
+          res.status(500).send("Database update failed!");
+        });
+      } else {
+          res.status(500).send('not a competitor uploading')
       }
   });
 });

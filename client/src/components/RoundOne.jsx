@@ -75,7 +75,7 @@ class RoundOne extends React.Component {
         .then(result => console.log(result))
         .catch(error => console.log('Error! inside handleVoteClick Tournaments', error))
     }
-    // this.getRound1Info();
+    this.getRound1Info();
     // this.getRound2Info();
     // this.getRound3Info();
   }
