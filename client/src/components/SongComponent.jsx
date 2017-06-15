@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
-import SongEntry from './SongEntry.jsx'
+import SongEntry from './SongEntry.jsx';
+import UserAvatar from 'react-user-avatar';
 
 class SongComponent extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class SongComponent extends React.Component {
       comments: [],
       newSong: {},
       numVote: 0,
-      numCom: 0
+      numCom: 0,
+
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
     this.handleCommentTyping = this.handleCommentTyping.bind(this);
@@ -23,6 +25,17 @@ class SongComponent extends React.Component {
 
   componentDidMount() {
     this.getNewSongs(this.props.params.songname);
+    this.getRandomImage();
+  }
+
+    getRandomImage() {
+      axios.get('https://randomuser.me/api/')
+      .then((response) => {
+				this.setState({userImage: response.data.results[0].picture.large})
+      })
+      .catch((err) => {
+				console.log("This is the image response ERRORRER", err);
+      });
   }
   
   getNewSongs(song_id) {
@@ -68,6 +81,7 @@ class SongComponent extends React.Component {
         this.setState({
           comments: results.data
         })
+        console.log(results.data, "COMMWNTSSS")
       })
       .catch((error) => {
         console.log('Error! getSongs on SongEntry.jsx', error);
@@ -79,34 +93,38 @@ class SongComponent extends React.Component {
   render() {
     return (
       <div>
-        <h1>SongCom</h1>
-          <div className="container songListRow rcorners">		
-        <div className="row">
-					<h3 className="songTitle">{this.state.newSong.name}</h3>
-				</div>	
-				<div className="row">
-					<ReactAudioPlayer src={this.state.newSong.link ? this.state.newSong.link : this.state.default} controls/>
-					<button className="btn comBut btn-danger" onClick={() =>{ this.handleVoteClick(this.state.newSong.submission_id)}}>  
-						<span className="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Likes {this.state.numVote}
-					</button>
-					<button className="btn comBut btn-info" href="#">  
-						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
-					</button>
-          <p onClick={()=>{this.handleProfileSongClick(this.state.newSong.profiles_id)}}className="songCreator">By {this.state.newSong.display}</p>
-				</div>
-				<div>
-					<input onChange={this.handleCommentTyping}></input>
-					<button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.state.newSong.submission_id)}>submit comment</button>
-				</div>
-				<div>
-					<h1>Comments:</h1>
-					<div >
-						{this.state.comments.map((comment) => {
-							return <div className="card">{comment.comment}</div>
-						})}
-				</div>		
-      </div>  
+        <div className="jumbotron">
+        <h1 className="commentTitle">{this.state.newSong.name}</h1>
+        </div>
+          <div className="container">		
+            <div className="row">
+				  </div>	
+				  <div className="row">
+					  <ReactAudioPlayer src={this.state.newSong.link ? this.state.newSong.link : this.state.default} controls/>
+					  <button className="btn comBut btn-danger" onClick={() =>{ this.handleVoteClick(this.state.newSong.submission_id)}}>  
+						  <span className="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Likes {this.state.numVote}
+					  </button>
+					  <button className="btn comBut btn-info" href="#">  
+						  <span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
+					  </button>
+            <p onClick={()=>{this.handleProfileSongClick(this.state.newSong.profiles_id)}}className="songCreator">By {this.state.newSong.display}</p>
+				  </div>
+			  	<div>
+					  <input onChange={this.handleCommentTyping}></input>
+					  <button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.state.newSong.submission_id)}>submit comment</button>
+				  </div>
       </div>
+				<div className="container">
+					<h1 className="row col-xs-12 col-md-12 commentTitle">Comments:</h1>
+					<div className="row col-xs-12">
+						{this.state.comments.map((comment) => {
+							return <div className="rowsongListRow border-top-0">
+                <UserAvatar className="" size="48" name={comment.display}/>
+                <h4 className="col-xs-9">{comment.comment}</h4>
+              </div>
+						})}
+				  </div>		
+      </div>  
       </div>
     )
   }

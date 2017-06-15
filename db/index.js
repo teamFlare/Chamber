@@ -65,7 +65,9 @@ function getSingleUserSongs(user, callback) {
 }
 
 function getCommentsFromDb(callback, collab_id) {
-  knex('comments').where({submission_id: collab_id}).select('comment')
+  var commentQuery = knex('comments').select().where({submission_id: collab_id}).as('commentsTable')
+
+  knex(commentQuery).innerJoin('profiles', 'commentsTable.profiles_id', '=', 'profiles.id')
       .then((response) => {
         // console.log(response)
           callback(response, null)

@@ -138,6 +138,11 @@ div.tab button.active {
     height: 150px;    */
 }
 
+.commentTitle {
+    text-align: center;
+    color: darkslategray;
+}
+
 .footerCol {
 	background-color: #424242
 }
@@ -156,6 +161,26 @@ div.tab button.active {
 
 .uploadBut {
 	text-align: center;
+}
+
+.UserAvatar {
+  display: inline-block;
+  color: white;
+}
+
+.UserAvatar--inner {
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.UserAvatar--light {
+  color: gray;
+}
+
+.UserAvatar--light .UserAvatar--inner {
+  border: 1px solid lightgray;
 }
 
 /*.jumbotron {
