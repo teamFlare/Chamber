@@ -70,6 +70,10 @@ class SongEntry extends React.Component {
      browserHistory.push('/singleSong/'+str);
   }
 
+  handleProfileSongClick(str) {
+    browserHistory.push('/profile/'+str);
+  }
+
   render() {
     let usrPic = this.props.song.display?this.props.song.display:this.props.myName;
 		return (
@@ -85,7 +89,7 @@ class SongEntry extends React.Component {
 					<button className="btn comBut btn-info" href="#">  
 						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
 					</button>
-          <p className="songCreator">By {usrPic}</p>
+          <p onClick={()=>{this.handleProfileSongClick(this.props.song.profiles_id)}}className="songCreator">By {usrPic}</p>
 				</div>
 				{/*<div>
 					<input onChange={this.handleCommentTyping}></input>

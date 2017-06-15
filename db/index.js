@@ -77,14 +77,14 @@ function getCommentsFromDb(callback, collab_id) {
 
 function postVoteToDb(voteObject, callback) {
   knex('likes').insert({profiles_id: voteObject.profile_id, submission_id: voteObject.collabs_id})
-    .then(result => console.log(result))
-    .catch(error => console.log(error))
+    .then(result => callback(null, result))
+    .catch(error => callback(error, null))
 }
 
 function postCommentToDb(voteObject, callback) {
   knex('comments').insert({profiles_id: voteObject.profile_id, submission_id: voteObject.collabs_id, comment: voteObject.comment})
-    .then(result => console.log(result))
-    .catch(error => console.log(error))
+    .then(result => callback(null, result))
+    .catch(error => callback(error, null))
 }
 
 module.exports = db;

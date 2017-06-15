@@ -18,7 +18,7 @@ class Header extends React.Component {
           <a className="navbar-brand title" href="/">Co.Lab</a>
           <ul className="nav navbar-nav navbar-right">
             <li><Link to='/'>Discover Sounds</Link></li>
-            <li><Link to='/profile'>Profile</Link></li>
+            <li><Link to='/myProfile'>Profile</Link></li>
             <li><Link to='/tournaments'>Tournaments</Link></li>
             <li><a href='/logout' className="navBarLinkEnd">Logout</a></li>
          </ul>      

@@ -20,6 +20,7 @@ import SongComponent from './components/SongComponent.jsx';
 import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import store, { history } from './store';
+import MyProfile from './components/MyProfile.jsx';
 
 const router = (
   <Provider store={store}>
@@ -27,7 +28,8 @@ const router = (
       <Route path="/" component={Container}>
         <IndexRoute component={AppWithAxios}></IndexRoute>
         <Route path="/song" component={SongDisplay}></Route>
-        <Route path="/profile" component={Profile}></Route>
+        <Route path="/myProfile" component={MyProfile}></Route>
+        <Route path="/profile/:user_id" component={Profile}></Route>
         <Route path="/upload" component={Uploads}></Route>
         <Route path="/tournaments" component={Tournaments}></Route>
         <Route path="/singleSong/:songname" component={SongComponent}></Route>
