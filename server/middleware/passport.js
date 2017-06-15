@@ -112,10 +112,19 @@ passport.use('local-login', new LocalStrategy({
       });
   }));
 
+// passport.use('google', new GoogleStrategy({
+//   clientID: config.passport.Google.clientID,
+//   clientSecret: config.passport.Google.clientSecret,
+//   callbackURL: config.passport.Google.callbackURL,
+//   passReqToCallback: true
+// },
+//   (req, accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile(req ,'google', profile, done))
+// );
+
 passport.use('google', new GoogleStrategy({
-  clientID: config.passport.Google.clientID,
-  clientSecret: config.passport.Google.clientSecret,
-  callbackURL: config.passport.Google.callbackURL,
+  clientID: process.env.google_clientid,
+  clientSecret: process.env.google_clientsecret,
+  callbackURL: process.env.google_callbackURL,
   passReqToCallback: true
 },
   (req, accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile(req ,'google', profile, done))

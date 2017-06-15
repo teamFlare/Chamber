@@ -39,10 +39,17 @@ app.use(middleware.flash());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+// AWS.config.update(
+//   {
+//     accessKeyId: AWSkey.accessKeyId,
+//     secretAccessKey: AWSkey.secretAccessKey
+//     // region: 'us-west-2'
+//   });
+
 AWS.config.update(
   {
-    accessKeyId: AWSkey.accessKeyId,
-    secretAccessKey: AWSkey.secretAccessKey
+    accessKeyId: process.env.s3_key,
+    secretAccessKey: process.env.s3_secret
     // region: 'us-west-2'
   });
   
