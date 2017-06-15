@@ -11,7 +11,7 @@ var File = require('file');
 var cors = require('cors');
 var db = require('../db/index.js');
 const knex = require('knex')(require('../knexfile.js'));
-const AWSkey = require('./../config/awskey.json');
+// const AWSkey = require('./../config/awskey.json');
 
 //modularized stuff 
 const round1matchup1 = require('./routes/round1matchup1');
