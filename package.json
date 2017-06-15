@@ -5,7 +5,7 @@
     "node": "8.0.0"
   },
   "scripts": {
-    "start": "export NODE_ENV=production node server",
+    "start": "NODE_ENV=production && node server",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
