@@ -67,17 +67,18 @@ class Tournaments extends React.Component {
 
   render() {
     return (
-      <div>
-      <h1 className="songTitle">Tournaments</h1> <br/><br/><br/>
-      <button className="btn comBut btn-danger" onClick={() => this.setState({round1boolean: true, round2boolean: false, finalsboolean: false, createboolean: false, uploadboolean: false})}>First Round</button>
-      <button className="btn comBut btn-danger" onClick={() => this.setState({round1boolean: false, round2boolean: true, finalsboolean: false, createboolean: false, uploadboolean: false})}>Second Round</button>
-      <button className="btn comBut btn-danger" onClick={() => this.setState({round1boolean: false, round2boolean: false, finalsboolean: true, createboolean: false, uploadboolean: false})}>Finals</button>
-      <button className="btn comBut btn-danger" onClick={() => this.setState({round1boolean: false, round2boolean: false, finalsboolean: false, createboolean: false, uploadboolean: true})}>Upload</button>
-      {this.state.profileunlock ? <button className="btn comBut btn-danger" onClick={() => this.setState({createboolean: true, round1boolean: false, round2boolean: false, finalsboolean: false, uploadboolean: false})}>Create Tournament</button>: null}
+      <div className="container">
+        <br/>
+      <p className='titleTourney'>Tournaments</p>
+      <button className="btn comBut comment-button-tournament" onClick={() => this.setState({round1boolean: true, round2boolean: false, finalsboolean: false, createboolean: false, uploadboolean: false})}>First Round</button><span> </span>      
+      <button className="btn comBut comment-button-tournament" onClick={() => this.setState({round1boolean: false, round2boolean: true, finalsboolean: false, createboolean: false, uploadboolean: false})}>Second Round</button><span> </span>     
+      <button className="btn comBut comment-button-tournament" onClick={() => this.setState({round1boolean: false, round2boolean: false, finalsboolean: true, createboolean: false, uploadboolean: false})}>Finals</button><span> </span> 
+      <button className="btn comBut comment-button-tournament" onClick={() => this.setState({round1boolean: false, round2boolean: false, finalsboolean: false, createboolean: false, uploadboolean: true})}>Upload</button><span> </span> 
+      {this.state.profileunlock ? <button className="btn comBut comment-button-tournament" onClick={() => this.setState({createboolean: true, round1boolean: false, round2boolean: false, finalsboolean: false, uploadboolean: false})}>Create Tournament</button>: null}
       {this.state.uploadboolean ? <div>Competitors: Upload your submission below
       <Dropzone onDrop={this.competitorUpload}/>
       </div>: null}
-       {this.state.round1boolean ? <RoundOne/> : null}
+        {this.state.round1boolean ? <RoundOne/> : null}
         {this.state.round2boolean ? <RoundTwo/> : null}
         {this.state.finalsboolean ? <RoundThree/> : null}
         {this.state.createboolean ? <TournamentForm/>: null}
