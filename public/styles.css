@@ -59,7 +59,7 @@ h2 {
 }
 
 h3 {
-    color: #E0E0E0;
+    color: black;
 }
 
 h5 {
@@ -318,6 +318,11 @@ div.tab button.active {
 
 .cursorPoint {
     cursor: pointer;
+}
+
+.submitButtonBoi {
+    margin-top: 25px;
+    display: block;
 }
 
 .commentUserName {

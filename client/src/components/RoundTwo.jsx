@@ -143,7 +143,7 @@ class RoundTwo extends React.Component {
             {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound3(4, this.state.round2matchup2)}>Move to round 3</button>: null}
             <div className = "songVote white">Votes: {this.state.round2matchup2.profile2count}</div>
           </div> <br/> <br/>
-          {this.state.profileunlock ? <button className=" btn comBut btn-danger btn-md tagTitle" onClick={this.submitRound2}>Submit Round 2 Winners</button>: null}
+          {this.state.profileunlock ? <button className="submitButtonBoi btn comBut btn-danger btn-md tagTitle" onClick={this.submitRound2}>Submit Round 2 Winners</button>: null}
         </div>
     )
   }

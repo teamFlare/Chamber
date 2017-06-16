@@ -218,7 +218,7 @@ submitRound1() {
             {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound2(8, this.state.round1matchup4)}>Move to round 2</button>: null}
             <div className = "songVote white">Votes: {this.state.round1matchup4.profile2count}</div>
           </div> <br/><br/>
-          {this.state.profileunlock ? <div><button className=" btn comBut btn-danger btn-md tagTitle" onClick={this.submitRound1}>Submit Round 1 Winners</button></div>: null}
+          {this.state.profileunlock ? <div><button className="submitButtonBoi btn comBut btn-danger btn-md tagTitle" onClick={this.submitRound1}>Submit Round 1 Winners</button></div>: null}
         </div>
     )
   }
