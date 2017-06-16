@@ -100,20 +100,8 @@ class SongEntry extends React.Component {
 						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
 					</button>
           <p onClick={()=>{this.handleProfileSongClick(this.props.song.profiles_id)}}className="songCreator">By {usrPic}</p>
-				</div>
-				{/*<div>
-					<input onChange={this.handleCommentTyping}></input>
-					<button className="vote-button btn btn-warning" onClick={() => this.handleCommentClick(this.props.song.submission_id)}>submit comment</button>
-				</div>*/}
-				{/*<div>
-					<h1>Comments:</h1>
-					<div >
-						{this.state.comments.map((comment) => {
-							return <div className="card">{comment.comment}</div>
-						})}
-				</div>*/}			
+				</div>		
       </div>
-
  		)
   }
 }
