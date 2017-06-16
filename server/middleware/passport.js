@@ -4,8 +4,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
-// const config = require('../../config/development.json');
-const config = require('config');
+const config = require('../../config/development.json');
+// const config = require('config');
 const models = require('../../db/models');
 
 passport.serializeUser((profile, done) => {
@@ -122,9 +122,9 @@ passport.use('local-login', new LocalStrategy({
 // );
 
 passport.use('google', new GoogleStrategy({
-  clientID: process.env.google_clientid,
-  clientSecret: process.env.google_clientsecret,
-  callbackURL: process.env.google_callbackURL,
+  clientID: process.env.google_clientid || config.passport.Google.clientID,
+  clientSecret: process.env.google_clientsecret || config.passport.Google.clientSecret,
+  callbackURL: process.env.google_callbackURL || config.passport.Google.callbackURL,
   passReqToCallback: true
 },
   (req, accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile(req ,'google', profile, done))

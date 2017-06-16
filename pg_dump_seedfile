@@ -1,0 +1,1425 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.3
+-- Dumped by pg_dump version 9.6.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: auths; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE auths (
+    id integer NOT NULL,
+    type character varying(8) NOT NULL,
+    oauth_id character varying(30),
+    password character varying(100),
+    salt character varying(100),
+    profile_id integer
+);
+
+
+ALTER TABLE auths OWNER TO postgres;
+
+--
+-- Name: auths_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auths_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auths_id_seq OWNER TO postgres;
+
+--
+-- Name: auths_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auths_id_seq OWNED BY auths.id;
+
+
+--
+-- Name: collaborations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE collaborations (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    beat_id integer,
+    collab_id integer,
+    link character varying(255),
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE collaborations OWNER TO postgres;
+
+--
+-- Name: collaborations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE collaborations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE collaborations_id_seq OWNER TO postgres;
+
+--
+-- Name: collaborations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE collaborations_id_seq OWNED BY collaborations.id;
+
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE comments (
+    id integer NOT NULL,
+    comment character varying(255) NOT NULL,
+    profiles_id integer,
+    submission_id integer,
+    collaboration_id integer,
+    usersubmitted_id integer,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE comments OWNER TO postgres;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE comments_id_seq OWNER TO postgres;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
+
+
+--
+-- Name: knex_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE knex_migrations (
+    id integer NOT NULL,
+    name character varying(255),
+    batch integer,
+    migration_time timestamp with time zone
+);
+
+
+ALTER TABLE knex_migrations OWNER TO postgres;
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE knex_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE knex_migrations_id_seq OWNER TO postgres;
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE knex_migrations_id_seq OWNED BY knex_migrations.id;
+
+
+--
+-- Name: knex_migrations_lock; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE knex_migrations_lock (
+    is_locked integer
+);
+
+
+ALTER TABLE knex_migrations_lock OWNER TO postgres;
+
+--
+-- Name: likes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE likes (
+    id integer NOT NULL,
+    profiles_id integer,
+    submission_id integer,
+    collaboration_id integer,
+    usersubmitted_id integer
+);
+
+
+ALTER TABLE likes OWNER TO postgres;
+
+--
+-- Name: likes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE likes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE likes_id_seq OWNER TO postgres;
+
+--
+-- Name: likes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE likes_id_seq OWNED BY likes.id;
+
+
+--
+-- Name: matchup; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE matchup (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    prof_id1 integer,
+    prof_id2 integer,
+    song_id1 integer,
+    song_id2 integer,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE matchup OWNER TO postgres;
+
+--
+-- Name: matchup_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE matchup_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE matchup_id_seq OWNER TO postgres;
+
+--
+-- Name: matchup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE matchup_id_seq OWNED BY matchup.id;
+
+
+--
+-- Name: profiles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE profiles (
+    id integer NOT NULL,
+    first character varying(100),
+    last character varying(100),
+    display character varying(100),
+    email character varying(100),
+    phone character varying(100),
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE profiles OWNER TO postgres;
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE profiles_id_seq OWNER TO postgres;
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE profiles_id_seq OWNED BY profiles.id;
+
+
+--
+-- Name: round1; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE round1 (
+    id integer NOT NULL,
+    name character varying(100),
+    matchup_id1 integer,
+    matchup_id2 integer,
+    matchup_id3 integer,
+    matchup_id4 integer,
+    round1_beat integer,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE round1 OWNER TO postgres;
+
+--
+-- Name: round1_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE round1_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE round1_id_seq OWNER TO postgres;
+
+--
+-- Name: round1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE round1_id_seq OWNED BY round1.id;
+
+
+--
+-- Name: round2; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE round2 (
+    id integer NOT NULL,
+    name character varying(100),
+    matchup_id1 integer,
+    matchup_id2 integer,
+    round2_beat integer,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE round2 OWNER TO postgres;
+
+--
+-- Name: round2_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE round2_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE round2_id_seq OWNER TO postgres;
+
+--
+-- Name: round2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE round2_id_seq OWNED BY round2.id;
+
+
+--
+-- Name: round3; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE round3 (
+    id integer NOT NULL,
+    name character varying(100),
+    matchup_id1 integer,
+    round3_beat integer,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE round3 OWNER TO postgres;
+
+--
+-- Name: round3_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE round3_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE round3_id_seq OWNER TO postgres;
+
+--
+-- Name: round3_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE round3_id_seq OWNED BY round3.id;
+
+
+--
+-- Name: submissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE submissions (
+    id integer NOT NULL,
+    name character varying(100),
+    profiles_id integer,
+    type character varying(255) NOT NULL,
+    tempo character varying(255),
+    link character varying(255),
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE submissions OWNER TO postgres;
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE submissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE submissions_id_seq OWNER TO postgres;
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE submissions_id_seq OWNED BY submissions.id;
+
+
+--
+-- Name: tournaments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tournaments (
+    id integer NOT NULL,
+    name character varying(100),
+    round1_id integer,
+    round2_id integer,
+    round3_id integer,
+    description character varying(255) NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE tournaments OWNER TO postgres;
+
+--
+-- Name: tournaments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tournaments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tournaments_id_seq OWNER TO postgres;
+
+--
+-- Name: tournaments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tournaments_id_seq OWNED BY tournaments.id;
+
+
+--
+-- Name: userSubmittedSongs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE "userSubmittedSongs" (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    profiles_id integer,
+    link character varying(255),
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE "userSubmittedSongs" OWNER TO postgres;
+
+--
+-- Name: userSubmittedSongs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "userSubmittedSongs_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "userSubmittedSongs_id_seq" OWNER TO postgres;
+
+--
+-- Name: userSubmittedSongs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "userSubmittedSongs_id_seq" OWNED BY "userSubmittedSongs".id;
+
+
+--
+-- Name: auths id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auths ALTER COLUMN id SET DEFAULT nextval('auths_id_seq'::regclass);
+
+
+--
+-- Name: collaborations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY collaborations ALTER COLUMN id SET DEFAULT nextval('collaborations_id_seq'::regclass);
+
+
+--
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comments ALTER COLUMN id SET DEFAULT nextval('comments_id_seq'::regclass);
+
+
+--
+-- Name: knex_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY knex_migrations ALTER COLUMN id SET DEFAULT nextval('knex_migrations_id_seq'::regclass);
+
+
+--
+-- Name: likes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY likes ALTER COLUMN id SET DEFAULT nextval('likes_id_seq'::regclass);
+
+
+--
+-- Name: matchup id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matchup ALTER COLUMN id SET DEFAULT nextval('matchup_id_seq'::regclass);
+
+
+--
+-- Name: profiles id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profiles ALTER COLUMN id SET DEFAULT nextval('profiles_id_seq'::regclass);
+
+
+--
+-- Name: round1 id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round1 ALTER COLUMN id SET DEFAULT nextval('round1_id_seq'::regclass);
+
+
+--
+-- Name: round2 id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round2 ALTER COLUMN id SET DEFAULT nextval('round2_id_seq'::regclass);
+
+
+--
+-- Name: round3 id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round3 ALTER COLUMN id SET DEFAULT nextval('round3_id_seq'::regclass);
+
+
+--
+-- Name: submissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY submissions ALTER COLUMN id SET DEFAULT nextval('submissions_id_seq'::regclass);
+
+
+--
+-- Name: tournaments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tournaments ALTER COLUMN id SET DEFAULT nextval('tournaments_id_seq'::regclass);
+
+
+--
+-- Name: userSubmittedSongs id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "userSubmittedSongs" ALTER COLUMN id SET DEFAULT nextval('"userSubmittedSongs_id_seq"'::regclass);
+
+
+--
+-- Data for Name: auths; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auths (id, type, oauth_id, password, salt, profile_id) FROM stdin;
+1	google	116895497738207491462	\N	\N	8
+\.
+
+
+--
+-- Name: auths_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auths_id_seq', 1, true);
+
+
+--
+-- Data for Name: collaborations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY collaborations (id, name, beat_id, collab_id, link, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: collaborations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('collaborations_id_seq', 1, false);
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY comments (id, comment, profiles_id, submission_id, collaboration_id, usersubmitted_id, created_at, updated_at) FROM stdin;
+1	Prateek is week	1	1	\N	\N	2017-06-14 19:38:32.651266-07	2017-06-14 19:38:32.651266-07
+2	this is a comment	2	1	\N	\N	2017-06-14 19:38:32.651857-07	2017-06-14 19:38:32.651857-07
+3	Steves got bars	3	1	\N	\N	2017-06-14 19:38:32.652556-07	2017-06-14 19:38:32.652556-07
+4	Prateek got skillz that killz	4	1	\N	\N	2017-06-14 19:38:32.653253-07	2017-06-14 19:38:32.653253-07
+5	I like to rap	5	1	\N	\N	2017-06-14 19:38:32.653623-07	2017-06-14 19:38:32.653623-07
+6	Prateek is week	1	2	\N	\N	2017-06-14 19:38:32.654251-07	2017-06-14 19:38:32.654251-07
+7	this is a comment	2	2	\N	\N	2017-06-14 19:38:32.654713-07	2017-06-14 19:38:32.654713-07
+8	Steves got bars	3	2	\N	\N	2017-06-14 19:38:32.655556-07	2017-06-14 19:38:32.655556-07
+9	Prateek got skillz that killz	4	2	\N	\N	2017-06-14 19:38:32.656719-07	2017-06-14 19:38:32.656719-07
+10	I like to rap	5	2	\N	\N	2017-06-14 19:38:32.657139-07	2017-06-14 19:38:32.657139-07
+11	Prateek is week	1	3	\N	\N	2017-06-14 19:38:32.657942-07	2017-06-14 19:38:32.657942-07
+12	this is a comment	2	3	\N	\N	2017-06-14 19:38:32.658363-07	2017-06-14 19:38:32.658363-07
+13	Steves got bars	3	3	\N	\N	2017-06-14 19:38:32.658987-07	2017-06-14 19:38:32.658987-07
+14	Prateek got skillz that killz	4	3	\N	\N	2017-06-14 19:38:32.659405-07	2017-06-14 19:38:32.659405-07
+15	I like to rap	5	3	\N	\N	2017-06-14 19:38:32.660223-07	2017-06-14 19:38:32.660223-07
+16	Prateek is week	1	4	\N	\N	2017-06-14 19:38:32.661206-07	2017-06-14 19:38:32.661206-07
+17	this is a comment	2	4	\N	\N	2017-06-14 19:38:32.661681-07	2017-06-14 19:38:32.661681-07
+18	Steves got bars	3	4	\N	\N	2017-06-14 19:38:32.662354-07	2017-06-14 19:38:32.662354-07
+19	Prateek got skillz that killz	4	4	\N	\N	2017-06-14 19:38:32.662759-07	2017-06-14 19:38:32.662759-07
+20	I like to rap	5	4	\N	\N	2017-06-14 19:38:32.663433-07	2017-06-14 19:38:32.663433-07
+21	Prateek is week	1	5	\N	\N	2017-06-14 19:38:32.664017-07	2017-06-14 19:38:32.664017-07
+22	this is a comment	2	5	\N	\N	2017-06-14 19:38:32.664764-07	2017-06-14 19:38:32.664764-07
+23	Steves got bars	3	5	\N	\N	2017-06-14 19:38:32.665798-07	2017-06-14 19:38:32.665798-07
+24	Prateek got skillz that killz	4	5	\N	\N	2017-06-14 19:38:32.670807-07	2017-06-14 19:38:32.670807-07
+25	I like to rap	5	5	\N	\N	2017-06-14 19:38:32.689914-07	2017-06-14 19:38:32.689914-07
+26	Prateek is week	1	6	\N	\N	2017-06-14 19:38:32.693455-07	2017-06-14 19:38:32.693455-07
+27	this is a comment	2	6	\N	\N	2017-06-14 19:38:32.698473-07	2017-06-14 19:38:32.698473-07
+28	Steves got bars	3	6	\N	\N	2017-06-14 19:38:32.699455-07	2017-06-14 19:38:32.699455-07
+29	Prateek got skillz that killz	4	6	\N	\N	2017-06-14 19:38:32.699818-07	2017-06-14 19:38:32.699818-07
+30	I like to rap	5	6	\N	\N	2017-06-14 19:38:32.700426-07	2017-06-14 19:38:32.700426-07
+31	Prateek is week	1	7	\N	\N	2017-06-14 19:38:32.700766-07	2017-06-14 19:38:32.700766-07
+32	this is a comment	2	7	\N	\N	2017-06-14 19:38:32.701572-07	2017-06-14 19:38:32.701572-07
+33	Steves got bars	3	7	\N	\N	2017-06-14 19:38:32.702119-07	2017-06-14 19:38:32.702119-07
+34	Prateek got skillz that killz	4	7	\N	\N	2017-06-14 19:38:32.702927-07	2017-06-14 19:38:32.702927-07
+35	I like to rap	5	7	\N	\N	2017-06-14 19:38:32.703335-07	2017-06-14 19:38:32.703335-07
+36	Prateek is week	1	8	\N	\N	2017-06-14 19:38:32.703954-07	2017-06-14 19:38:32.703954-07
+37	this is a comment	2	8	\N	\N	2017-06-14 19:38:32.704289-07	2017-06-14 19:38:32.704289-07
+38	Steves got bars	3	8	\N	\N	2017-06-14 19:38:32.704873-07	2017-06-14 19:38:32.704873-07
+39	Prateek got skillz that killz	4	8	\N	\N	2017-06-14 19:38:32.705226-07	2017-06-14 19:38:32.705226-07
+40	I like to rap	5	8	\N	\N	2017-06-14 19:38:32.705832-07	2017-06-14 19:38:32.705832-07
+41	Prateek is week	1	9	\N	\N	2017-06-14 19:38:32.70616-07	2017-06-14 19:38:32.70616-07
+42	this is a comment	2	9	\N	\N	2017-06-14 19:38:32.707282-07	2017-06-14 19:38:32.707282-07
+43	Steves got bars	3	9	\N	\N	2017-06-14 19:38:32.707819-07	2017-06-14 19:38:32.707819-07
+44	Prateek got skillz that killz	4	9	\N	\N	2017-06-14 19:38:32.708438-07	2017-06-14 19:38:32.708438-07
+45	I like to rap	5	9	\N	\N	2017-06-14 19:38:32.708773-07	2017-06-14 19:38:32.708773-07
+46	Prateek is week	1	10	\N	\N	2017-06-14 19:38:32.709391-07	2017-06-14 19:38:32.709391-07
+47	this is a comment	2	10	\N	\N	2017-06-14 19:38:32.70973-07	2017-06-14 19:38:32.70973-07
+48	Steves got bars	3	10	\N	\N	2017-06-14 19:38:32.710303-07	2017-06-14 19:38:32.710303-07
+49	Prateek got skillz that killz	4	10	\N	\N	2017-06-14 19:38:32.710629-07	2017-06-14 19:38:32.710629-07
+50	I like to rap	5	10	\N	\N	2017-06-14 19:38:32.713917-07	2017-06-14 19:38:32.713917-07
+51	Prateek is week	1	11	\N	\N	2017-06-14 19:38:32.714421-07	2017-06-14 19:38:32.714421-07
+52	this is a comment	2	11	\N	\N	2017-06-14 19:38:32.71514-07	2017-06-14 19:38:32.71514-07
+53	Steves got bars	3	11	\N	\N	2017-06-14 19:38:32.715558-07	2017-06-14 19:38:32.715558-07
+54	Prateek got skillz that killz	4	11	\N	\N	2017-06-14 19:38:32.716305-07	2017-06-14 19:38:32.716305-07
+55	I like to rap	5	11	\N	\N	2017-06-14 19:38:32.718094-07	2017-06-14 19:38:32.718094-07
+56	Prateek is week	1	12	\N	\N	2017-06-14 19:38:32.719343-07	2017-06-14 19:38:32.719343-07
+57	this is a comment	2	12	\N	\N	2017-06-14 19:38:32.719858-07	2017-06-14 19:38:32.719858-07
+58	Steves got bars	3	12	\N	\N	2017-06-14 19:38:32.720592-07	2017-06-14 19:38:32.720592-07
+59	Prateek got skillz that killz	4	12	\N	\N	2017-06-14 19:38:32.720956-07	2017-06-14 19:38:32.720956-07
+60	I like to rap	5	12	\N	\N	2017-06-14 19:38:32.721587-07	2017-06-14 19:38:32.721587-07
+61	Prateek is week	1	13	\N	\N	2017-06-14 19:38:32.721953-07	2017-06-14 19:38:32.721953-07
+62	this is a comment	2	13	\N	\N	2017-06-14 19:38:32.723129-07	2017-06-14 19:38:32.723129-07
+63	Steves got bars	3	13	\N	\N	2017-06-14 19:38:32.723471-07	2017-06-14 19:38:32.723471-07
+64	Prateek got skillz that killz	4	13	\N	\N	2017-06-14 19:38:32.724188-07	2017-06-14 19:38:32.724188-07
+65	I like to rap	5	13	\N	\N	2017-06-14 19:38:32.725078-07	2017-06-14 19:38:32.725078-07
+66	Prateek is week	1	14	\N	\N	2017-06-14 19:38:32.725445-07	2017-06-14 19:38:32.725445-07
+67	this is a comment	2	14	\N	\N	2017-06-14 19:38:32.726082-07	2017-06-14 19:38:32.726082-07
+68	Steves got bars	3	14	\N	\N	2017-06-14 19:38:32.72642-07	2017-06-14 19:38:32.72642-07
+69	Prateek got skillz that killz	4	14	\N	\N	2017-06-14 19:38:32.727032-07	2017-06-14 19:38:32.727032-07
+70	I like to rap	5	14	\N	\N	2017-06-14 19:38:32.727395-07	2017-06-14 19:38:32.727395-07
+71	Prateek is week	1	15	\N	\N	2017-06-14 19:38:32.728748-07	2017-06-14 19:38:32.728748-07
+72	this is a comment	2	15	\N	\N	2017-06-14 19:38:32.729059-07	2017-06-14 19:38:32.729059-07
+73	Steves got bars	3	15	\N	\N	2017-06-14 19:38:32.729639-07	2017-06-14 19:38:32.729639-07
+74	Prateek got skillz that killz	4	15	\N	\N	2017-06-14 19:38:32.730015-07	2017-06-14 19:38:32.730015-07
+75	I like to rap	5	15	\N	\N	2017-06-14 19:38:32.730696-07	2017-06-14 19:38:32.730696-07
+76	Prateek is week	1	16	\N	\N	2017-06-14 19:38:32.731087-07	2017-06-14 19:38:32.731087-07
+77	this is a comment	2	16	\N	\N	2017-06-14 19:38:32.731703-07	2017-06-14 19:38:32.731703-07
+78	Steves got bars	3	16	\N	\N	2017-06-14 19:38:32.732-07	2017-06-14 19:38:32.732-07
+79	Prateek got skillz that killz	4	16	\N	\N	2017-06-14 19:38:32.732669-07	2017-06-14 19:38:32.732669-07
+80	I like to rap	5	16	\N	\N	2017-06-14 19:38:32.733004-07	2017-06-14 19:38:32.733004-07
+81	Prateek is week	1	17	\N	\N	2017-06-14 19:38:32.733549-07	2017-06-14 19:38:32.733549-07
+82	this is a comment	2	17	\N	\N	2017-06-14 19:38:32.733876-07	2017-06-14 19:38:32.733876-07
+83	Steves got bars	3	17	\N	\N	2017-06-14 19:38:32.734481-07	2017-06-14 19:38:32.734481-07
+84	Prateek got skillz that killz	4	17	\N	\N	2017-06-14 19:38:32.734814-07	2017-06-14 19:38:32.734814-07
+85	I like to rap	5	17	\N	\N	2017-06-14 19:38:32.735385-07	2017-06-14 19:38:32.735385-07
+86	Prateek is week	1	18	\N	\N	2017-06-14 19:38:32.735755-07	2017-06-14 19:38:32.735755-07
+87	this is a comment	2	18	\N	\N	2017-06-14 19:38:32.737448-07	2017-06-14 19:38:32.737448-07
+88	Steves got bars	3	18	\N	\N	2017-06-14 19:38:32.737659-07	2017-06-14 19:38:32.737659-07
+89	Prateek got skillz that killz	4	18	\N	\N	2017-06-14 19:38:32.738359-07	2017-06-14 19:38:32.738359-07
+90	I like to rap	5	18	\N	\N	2017-06-14 19:38:32.73865-07	2017-06-14 19:38:32.73865-07
+91	Prateek is week	1	19	\N	\N	2017-06-14 19:38:32.739205-07	2017-06-14 19:38:32.739205-07
+92	this is a comment	2	19	\N	\N	2017-06-14 19:38:32.739533-07	2017-06-14 19:38:32.739533-07
+93	Steves got bars	3	19	\N	\N	2017-06-14 19:38:32.740072-07	2017-06-14 19:38:32.740072-07
+94	Prateek got skillz that killz	4	19	\N	\N	2017-06-14 19:38:32.740434-07	2017-06-14 19:38:32.740434-07
+95	I like to rap	5	19	\N	\N	2017-06-14 19:38:32.740992-07	2017-06-14 19:38:32.740992-07
+96	Prateek is week	1	20	\N	\N	2017-06-14 19:38:32.741288-07	2017-06-14 19:38:32.741288-07
+97	this is a comment	2	20	\N	\N	2017-06-14 19:38:32.741849-07	2017-06-14 19:38:32.741849-07
+98	Steves got bars	3	20	\N	\N	2017-06-14 19:38:32.74218-07	2017-06-14 19:38:32.74218-07
+99	Prateek got skillz that killz	4	20	\N	\N	2017-06-14 19:38:32.742757-07	2017-06-14 19:38:32.742757-07
+100	I like to rap	5	20	\N	\N	2017-06-14 19:38:32.743339-07	2017-06-14 19:38:32.743339-07
+101	ff	8	17	\N	\N	2017-06-15 17:40:34.222754-07	2017-06-15 17:40:34.222754-07
+\.
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('comments_id_seq', 101, true);
+
+
+--
+-- Data for Name: knex_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY knex_migrations (id, name, batch, migration_time) FROM stdin;
+1	20170326215143_initial.js	1	2017-06-14 19:38:25.197-07
+2	20170530143357_create_submissions.js	1	2017-06-14 19:38:25.228-07
+3	20170607112858_tournament_schema.js	1	2017-06-14 19:38:25.26-07
+\.
+
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('knex_migrations_id_seq', 3, true);
+
+
+--
+-- Data for Name: knex_migrations_lock; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY knex_migrations_lock (is_locked) FROM stdin;
+0
+\.
+
+
+--
+-- Data for Name: likes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY likes (id, profiles_id, submission_id, collaboration_id, usersubmitted_id) FROM stdin;
+1	1	1	\N	\N
+2	2	1	\N	\N
+3	3	1	\N	\N
+4	4	1	\N	\N
+5	5	1	\N	\N
+6	1	2	\N	\N
+7	2	2	\N	\N
+8	3	2	\N	\N
+9	4	2	\N	\N
+10	1	3	\N	\N
+11	2	3	\N	\N
+12	3	3	\N	\N
+13	1	4	\N	\N
+14	2	4	\N	\N
+15	1	5	\N	\N
+16	1	6	\N	\N
+17	2	6	\N	\N
+18	3	6	\N	\N
+19	4	6	\N	\N
+20	5	6	\N	\N
+21	1	7	\N	\N
+22	2	7	\N	\N
+23	3	7	\N	\N
+24	4	7	\N	\N
+25	1	8	\N	\N
+26	2	8	\N	\N
+27	3	8	\N	\N
+28	1	9	\N	\N
+29	2	9	\N	\N
+30	1	10	\N	\N
+31	1	11	\N	\N
+32	2	11	\N	\N
+33	3	11	\N	\N
+34	4	11	\N	\N
+35	5	12	\N	\N
+36	1	12	\N	\N
+37	2	12	\N	\N
+38	3	12	\N	\N
+39	4	12	\N	\N
+40	5	12	\N	\N
+41	1	13	\N	\N
+42	2	13	\N	\N
+43	3	13	\N	\N
+44	4	13	\N	\N
+45	5	13	\N	\N
+46	1	14	\N	\N
+47	2	14	\N	\N
+48	3	14	\N	\N
+49	4	14	\N	\N
+50	5	14	\N	\N
+51	1	15	\N	\N
+52	2	15	\N	\N
+53	3	15	\N	\N
+54	4	15	\N	\N
+55	5	15	\N	\N
+56	1	16	\N	\N
+57	2	16	\N	\N
+58	3	16	\N	\N
+59	4	16	\N	\N
+60	5	16	\N	\N
+61	1	17	\N	\N
+62	2	17	\N	\N
+63	3	17	\N	\N
+64	4	17	\N	\N
+65	5	17	\N	\N
+66	1	18	\N	\N
+67	2	18	\N	\N
+68	3	18	\N	\N
+69	4	18	\N	\N
+70	5	18	\N	\N
+71	1	19	\N	\N
+72	2	19	\N	\N
+73	3	19	\N	\N
+74	4	19	\N	\N
+75	5	19	\N	\N
+76	1	20	\N	\N
+77	2	20	\N	\N
+78	3	20	\N	\N
+79	4	20	\N	\N
+80	5	20	\N	\N
+81	8	17	\N	\N
+82	8	14	\N	\N
+83	8	15	\N	\N
+84	8	15	\N	\N
+85	8	15	\N	\N
+86	8	15	\N	\N
+87	8	15	\N	\N
+88	8	15	\N	\N
+89	8	15	\N	\N
+90	8	15	\N	\N
+91	8	15	\N	\N
+92	8	15	\N	\N
+93	8	18	\N	\N
+94	8	18	\N	\N
+95	8	18	\N	\N
+96	8	18	\N	\N
+97	8	18	\N	\N
+98	8	16	\N	\N
+99	8	16	\N	\N
+100	8	16	\N	\N
+101	8	16	\N	\N
+\.
+
+
+--
+-- Name: likes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('likes_id_seq', 101, true);
+
+
+--
+-- Data for Name: matchup; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY matchup (id, name, prof_id1, prof_id2, song_id1, song_id2, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: matchup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('matchup_id_seq', 1, false);
+
+
+--
+-- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY profiles (id, first, last, display, email, phone, created_at, updated_at) FROM stdin;
+1	Prateek	Bhatt	PBhatt	PBhatt@gmail.com	123-456-7899	2017-06-14 19:38:32.537993-07	2017-06-14 19:38:32.537993-07
+2	Nikhil	Mehta	NMehta	NMehta@gmail.com	123-456-5555	2017-06-14 19:38:32.539953-07	2017-06-14 19:38:32.539953-07
+3	Steve	Chang	SChang	SChang@gmail.com	123-456-6666	2017-06-14 19:38:32.544851-07	2017-06-14 19:38:32.544851-07
+4	Jimmy	Jones	JJones	JJones@gmail.com	123-456-7777	2017-06-14 19:38:32.54875-07	2017-06-14 19:38:32.54875-07
+5	Freddy	Fredster	FFredster	FFredster@gmail.com	123-456-4444	2017-06-14 19:38:32.551502-07	2017-06-14 19:38:32.551502-07
+6	Jimbo	Jimster	JJimster	JJimster@gmail.com	123-456-4444	2017-06-14 19:38:32.552918-07	2017-06-14 19:38:32.552918-07
+7	Harry	Hairster	HHairster	HHairster@gmail.com	123-456-4444	2017-06-14 19:38:32.554419-07	2017-06-14 19:38:32.554419-07
+8	Nikhil	Mehta	Nikhil Mehta	nikhil.r.mehta7@gmail.com	\N	2017-06-14 19:39:11.38964-07	2017-06-14 19:39:11.38964-07
+\.
+
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('profiles_id_seq', 8, true);
+
+
+--
+-- Data for Name: round1; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY round1 (id, name, matchup_id1, matchup_id2, matchup_id3, matchup_id4, round1_beat, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: round1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('round1_id_seq', 1, false);
+
+
+--
+-- Data for Name: round2; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY round2 (id, name, matchup_id1, matchup_id2, round2_beat, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: round2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('round2_id_seq', 1, false);
+
+
+--
+-- Data for Name: round3; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY round3 (id, name, matchup_id1, round3_beat, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: round3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('round3_id_seq', 1, false);
+
+
+--
+-- Data for Name: submissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY submissions (id, name, profiles_id, type, tempo, link, created_at, updated_at) FROM stdin;
+1	Change Clothes	1	beat	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/05+Jay-Z+-+Change+Clothes+(feat.+Pharrell).mp3	2017-06-14 19:38:32.556305-07	2017-06-14 19:38:32.556305-07
+2	Threat	1	beat	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/07+Jay-Z+-+Threat.mp3	2017-06-14 19:38:32.558444-07	2017-06-14 19:38:32.558444-07
+3	99 Problems	2	beat	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/09+Jay-Z+-+99+Problems.mp3	2017-06-14 19:38:32.561631-07	2017-06-14 19:38:32.561631-07
+4	Fig Leaf Bi Carbonate	2	beat	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/09-mf_doom-fig_leaf_bi_carbonate-c4.mp3	2017-06-14 19:38:32.56611-07	2017-06-14 19:38:32.56611-07
+5	Lucifer Intrumental	3	beat	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/10+Jay-Z+-+Lucifer+Instrumental.mp3	2017-06-14 19:38:32.568247-07	2017-06-14 19:38:32.568247-07
+6	Guinnesses	3	beat	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/11-mf_doom-guinnesses_feat._angelika_and_4ize-c4.mp3	2017-06-14 19:38:32.569661-07	2017-06-14 19:38:32.569661-07
+7	Justify My Thug	4	beat	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/12+Jay-Z+-+Justify+My+Thug.mp3	2017-06-14 19:38:32.573612-07	2017-06-14 19:38:32.573612-07
+8	Lucifer	4	beat	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/13+Jay-Z+-+Lucifer.mp3	2017-06-14 19:38:32.574532-07	2017-06-14 19:38:32.574532-07
+9	Allure	5	beat	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/14+Jay-Z+-+Allure.mp3	2017-06-14 19:38:32.575063-07	2017-06-14 19:38:32.575063-07
+10	My First Song	5	beat	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/15+Jay-Z+-+My+1st+Song.mp3	2017-06-14 19:38:32.575784-07	2017-06-14 19:38:32.575784-07
+11	Change Clothes	1	beat	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/05+Jay-Z+-+Change+Clothes+(feat.+Pharrell).mp3	2017-06-14 19:38:32.577421-07	2017-06-14 19:38:32.577421-07
+12	Threat	1	beat	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/07+Jay-Z+-+Threat.mp3	2017-06-14 19:38:32.578073-07	2017-06-14 19:38:32.578073-07
+13	99 Problems - Collab	2	collab	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/09+Jay-Z+-+99+Problems.mp3	2017-06-14 19:38:32.579443-07	2017-06-14 19:38:32.579443-07
+14	Fig Leaf Bi Carbonate - Collab	2	collab	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/09-mf_doom-fig_leaf_bi_carbonate-c4.mp3	2017-06-14 19:38:32.580942-07	2017-06-14 19:38:32.580942-07
+15	Lucifer Intrumental - Collab	3	collab	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/10+Jay-Z+-+Lucifer+Instrumental.mp3	2017-06-14 19:38:32.582838-07	2017-06-14 19:38:32.582838-07
+16	Guinnesses - Collab	3	collab	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/11-mf_doom-guinnesses_feat._angelika_and_4ize-c4.mp3	2017-06-14 19:38:32.583623-07	2017-06-14 19:38:32.583623-07
+17	Justify My Thug - Collab	4	collab	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/12+Jay-Z+-+Justify+My+Thug.mp3	2017-06-14 19:38:32.58446-07	2017-06-14 19:38:32.58446-07
+18	Lucifer - Collab	4	collab	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/13+Jay-Z+-+Lucifer.mp3	2017-06-14 19:38:32.586199-07	2017-06-14 19:38:32.586199-07
+19	Allure - Collab	5	collab	90	https://s3-us-west-2.amazonaws.com/elasticsongstalk/14+Jay-Z+-+Allure.mp3	2017-06-14 19:38:32.58701-07	2017-06-14 19:38:32.58701-07
+20	My First Song - Collab	5	collab	100	https://s3-us-west-2.amazonaws.com/elasticsongstalk/15+Jay-Z+-+My+1st+Song.mp3	2017-06-14 19:38:32.590474-07	2017-06-14 19:38:32.590474-07
+\.
+
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('submissions_id_seq', 20, true);
+
+
+--
+-- Data for Name: tournaments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tournaments (id, name, round1_id, round2_id, round3_id, description, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: tournaments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tournaments_id_seq', 1, false);
+
+
+--
+-- Data for Name: userSubmittedSongs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "userSubmittedSongs" (id, name, profiles_id, link, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: userSubmittedSongs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"userSubmittedSongs_id_seq"', 1, false);
+
+
+--
+-- Name: auths auths_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auths
+    ADD CONSTRAINT auths_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collaborations collaborations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY collaborations
+    ADD CONSTRAINT collaborations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: knex_migrations knex_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY knex_migrations
+    ADD CONSTRAINT knex_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: likes likes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY likes
+    ADD CONSTRAINT likes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: matchup matchup_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matchup
+    ADD CONSTRAINT matchup_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profiles profiles_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_email_unique UNIQUE (email);
+
+
+--
+-- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: round1 round1_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round1
+    ADD CONSTRAINT round1_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: round2 round2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round2
+    ADD CONSTRAINT round2_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: round3 round3_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round3
+    ADD CONSTRAINT round3_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: submissions submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY submissions
+    ADD CONSTRAINT submissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tournaments tournaments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tournaments
+    ADD CONSTRAINT tournaments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: userSubmittedSongs userSubmittedSongs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "userSubmittedSongs"
+    ADD CONSTRAINT "userSubmittedSongs_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: auths auths_profile_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auths
+    ADD CONSTRAINT auths_profile_id_foreign FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: collaborations collaborations_beat_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY collaborations
+    ADD CONSTRAINT collaborations_beat_id_foreign FOREIGN KEY (beat_id) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: collaborations collaborations_collab_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY collaborations
+    ADD CONSTRAINT collaborations_collab_id_foreign FOREIGN KEY (collab_id) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: comments comments_collaboration_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_collaboration_id_foreign FOREIGN KEY (collaboration_id) REFERENCES collaborations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: comments comments_profiles_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_profiles_id_foreign FOREIGN KEY (profiles_id) REFERENCES profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: comments comments_submission_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_submission_id_foreign FOREIGN KEY (submission_id) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: comments comments_usersubmitted_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_usersubmitted_id_foreign FOREIGN KEY (usersubmitted_id) REFERENCES "userSubmittedSongs"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: likes likes_collaboration_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY likes
+    ADD CONSTRAINT likes_collaboration_id_foreign FOREIGN KEY (collaboration_id) REFERENCES collaborations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: likes likes_profiles_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY likes
+    ADD CONSTRAINT likes_profiles_id_foreign FOREIGN KEY (profiles_id) REFERENCES profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: likes likes_submission_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY likes
+    ADD CONSTRAINT likes_submission_id_foreign FOREIGN KEY (submission_id) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: likes likes_usersubmitted_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY likes
+    ADD CONSTRAINT likes_usersubmitted_id_foreign FOREIGN KEY (usersubmitted_id) REFERENCES "userSubmittedSongs"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: matchup matchup_prof_id1_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matchup
+    ADD CONSTRAINT matchup_prof_id1_foreign FOREIGN KEY (prof_id1) REFERENCES profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: matchup matchup_prof_id2_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matchup
+    ADD CONSTRAINT matchup_prof_id2_foreign FOREIGN KEY (prof_id2) REFERENCES profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: matchup matchup_song_id1_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matchup
+    ADD CONSTRAINT matchup_song_id1_foreign FOREIGN KEY (song_id1) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: matchup matchup_song_id2_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matchup
+    ADD CONSTRAINT matchup_song_id2_foreign FOREIGN KEY (song_id2) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round1 round1_matchup_id1_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round1
+    ADD CONSTRAINT round1_matchup_id1_foreign FOREIGN KEY (matchup_id1) REFERENCES matchup(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round1 round1_matchup_id2_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round1
+    ADD CONSTRAINT round1_matchup_id2_foreign FOREIGN KEY (matchup_id2) REFERENCES matchup(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round1 round1_matchup_id3_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round1
+    ADD CONSTRAINT round1_matchup_id3_foreign FOREIGN KEY (matchup_id3) REFERENCES matchup(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round1 round1_matchup_id4_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round1
+    ADD CONSTRAINT round1_matchup_id4_foreign FOREIGN KEY (matchup_id4) REFERENCES matchup(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round1 round1_round1_beat_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round1
+    ADD CONSTRAINT round1_round1_beat_foreign FOREIGN KEY (round1_beat) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round2 round2_matchup_id1_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round2
+    ADD CONSTRAINT round2_matchup_id1_foreign FOREIGN KEY (matchup_id1) REFERENCES matchup(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round2 round2_matchup_id2_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round2
+    ADD CONSTRAINT round2_matchup_id2_foreign FOREIGN KEY (matchup_id2) REFERENCES matchup(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round2 round2_round2_beat_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round2
+    ADD CONSTRAINT round2_round2_beat_foreign FOREIGN KEY (round2_beat) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round3 round3_matchup_id1_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round3
+    ADD CONSTRAINT round3_matchup_id1_foreign FOREIGN KEY (matchup_id1) REFERENCES matchup(id) ON DELETE CASCADE;
+
+
+--
+-- Name: round3 round3_round3_beat_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY round3
+    ADD CONSTRAINT round3_round3_beat_foreign FOREIGN KEY (round3_beat) REFERENCES submissions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: submissions submissions_profiles_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY submissions
+    ADD CONSTRAINT submissions_profiles_id_foreign FOREIGN KEY (profiles_id) REFERENCES profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: tournaments tournaments_round1_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tournaments
+    ADD CONSTRAINT tournaments_round1_id_foreign FOREIGN KEY (round1_id) REFERENCES round1(id) ON DELETE CASCADE;
+
+
+--
+-- Name: tournaments tournaments_round2_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tournaments
+    ADD CONSTRAINT tournaments_round2_id_foreign FOREIGN KEY (round2_id) REFERENCES round2(id) ON DELETE CASCADE;
+
+
+--
+-- Name: tournaments tournaments_round3_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tournaments
+    ADD CONSTRAINT tournaments_round3_id_foreign FOREIGN KEY (round3_id) REFERENCES round3(id) ON DELETE CASCADE;
+
+
+--
+-- Name: userSubmittedSongs usersubmittedsongs_profiles_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "userSubmittedSongs"
+    ADD CONSTRAINT usersubmittedsongs_profiles_id_foreign FOREIGN KEY (profiles_id) REFERENCES profiles(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
