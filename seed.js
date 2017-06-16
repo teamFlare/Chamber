@@ -11,23 +11,23 @@ for(var i = 0;i < Profiles.length;i++){
     .catch(error => console.log(error))
 }
 
-for(var i = 0;i < Submissions.length;i++){
-  knex('submissions').insert({name: Submissions[i].name, profiles_id: Submissions[i].profiles_id, type: Submissions[i].type, tempo: Submissions[i].tempo, link: Submissions[i].link})
-    .then(result => console.log(result))
-    .catch(error => console.log(error))
-}
+// for(var i = 0;i < Submissions.length;i++){
+//   knex('submissions').insert({name: Submissions[i].name, profiles_id: Submissions[i].profiles_id, type: Submissions[i].type, tempo: Submissions[i].tempo, link: Submissions[i].link})
+//     .then(result => console.log(result))
+//     .catch(error => console.log(error))
+// }
 
-for(var i = 0;i < Likes.length;i++){
-  knex('likes').insert({profiles_id: Likes[i].profiles_id, submission_id: Likes[i].submission_id})
-    .then(result => console.log(result))
-    .catch(error => console.log(error))
-}
+// for(var i = 0;i < Likes.length;i++){
+//   knex('likes').insert({profiles_id: Likes[i].profiles_id, submission_id: Likes[i].submission_id})
+//     .then(result => console.log(result))
+//     .catch(error => console.log(error))
+// }
 
-for(var i = 0;i < Comments.length;i++){
-  knex('comments').insert({profiles_id: Comments[i].profiles_id, comment: Comments[i].comment, submission_id: Comments[i].submission_id})
-    .then(result => console.log(result))
-    .catch(error => console.log(error))
-}
+// for(var i = 0;i < Comments.length;i++){
+//   knex('comments').insert({profiles_id: Comments[i].profiles_id, comment: Comments[i].comment, submission_id: Comments[i].submission_id})
+//     .then(result => console.log(result))
+//     .catch(error => console.log(error))
+// }
 
 
 
