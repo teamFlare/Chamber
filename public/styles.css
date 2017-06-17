@@ -162,6 +162,7 @@ div.tab button.active {
   z-index: -1;
 }
 
+
 .likeComButton {
     margin-bottom: 10px;
 }
@@ -173,8 +174,6 @@ div.tab button.active {
 .inputStyle {
   margin-top: 11px;
 }
-
-
 
 .rcorners {
     border-radius: 25px;
