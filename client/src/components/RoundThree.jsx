@@ -74,24 +74,28 @@ class RoundThree extends React.Component {
   
     return (
       <div>
-          <h2>Final Round</h2>
-          <div>Round 3 Beat!! Name: {this.state.round3matchup1.roundbeatname} <ReactAudioPlayer src={this.state.round3matchup1.roundbeatlink} controls/></div>
-          <h3>Matchup</h3>
-          <div className="container songListRow rcorners">
-          <div>Profile: {this.state.round3matchup1.profile1name}</div>
-          <div>Song Submission: {this.state.round3matchup1.profile1songname}</div>
-          <div>Votes: {this.state.round3matchup1.profile1count}</div>
-          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(1, this.state.round3matchup1)}>Like</button>
-          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound4(1, this.state.round3matchup1)}>Winner</button>: null}
-          <ReactAudioPlayer src={this.state.round3matchup1.profile1songlink} controls/>
-          </div> <br/> <br/>
-          <div className="container songListRow rcorners">
-          <div>Profile: {this.state.round3matchup1.profile2name}</div>
-          <div>Song Submission: {this.state.round3matchup1.profile2songname}</div>
-          <div>Votes: {this.state.round3matchup1.profile2count}</div>
-          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(2, this.state.round3matchup1)}>Like</button>
-          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound4(2, this.state.round3matchup1)}>Winner</button>: null}
-          <ReactAudioPlayer src={this.state.round3matchup1.profile2songlink} controls/>
+          <div className='jumbotron tournament_background'></div>
+          <div className='jumbotron jumbotron-tournament'>
+            <h2>Final Round</h2>
+            <div className = "songTitle white tagTitle">Round 3 Beat: {this.state.round3matchup1.roundbeatname} 
+              <div className='tagTitle'><ReactAudioPlayer src={this.state.round3matchup1.roundbeatlink} controls/></div></div>
+          </div>
+          <h3 className='h3-tournament'>Matchup</h3>
+          <div className="songListRowTournament rcorners col-xs-6">
+            <div className = "songTitleTournament white">{this.state.round3matchup1.profile1songname}</div>
+            <div className = "songCreatorTournament white">{this.state.round3matchup1.profile1name}</div>
+            <ReactAudioPlayer src={this.state.round3matchup1.profile1songlink} controls/>
+            <button className=" btn comBut btn-danger btn-md" onClick={() => this.voteSubmission(1, this.state.round3matchup1)}>Like</button>
+            {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound4(1, this.state.round3matchup1)}>Winner</button>: null}
+            <div className = "songVote white">Votes: {this.state.round3matchup1.profile1count}</div>
+          </div> 
+          <div className="songListRowTournament rcorners col-xs-6">
+            <div className = "songTitleTournament white">{this.state.round3matchup1.profile2songname}</div>
+            <div className = "songCreatorTournament white">{this.state.round3matchup1.profile2name}</div>
+            <ReactAudioPlayer src={this.state.round3matchup1.profile2songlink} controls/>
+            <button className=" btn comBut btn-danger btn-md" onClick={() => this.voteSubmission(2, this.state.round3matchup1)}>Like</button>
+            {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound4(2, this.state.round3matchup1)}>Winner</button>: null}
+            <div className = "songVote white">Votes: {this.state.round3matchup1.profile2count}</div>
           </div> <br/> <br/>
           <h1>WINNER: {this.state.winner}</h1>
         </div>

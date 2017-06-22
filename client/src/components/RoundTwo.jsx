@@ -103,43 +103,47 @@ class RoundTwo extends React.Component {
   
     return (
       <div>
-          <h2>Second Round</h2>
-          <div>Round 2 Beat!! Name: {this.state.round2matchup1.roundbeatname} <ReactAudioPlayer src={this.state.round2matchup1.roundbeatlink} controls/></div>
-          <h3>First Matchup</h3>
-          <div className="container songListRow rcorners">
-          <div>Profile: {this.state.round2matchup1.profile1name}</div>
-          <div>Song Submission: {this.state.round2matchup1.profile1songname}</div>
-          <div>Votes: {this.state.round2matchup1.profile1count}</div>
-          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(1, this.state.round2matchup1)}>Like</button>
-          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound3(1, this.state.round2matchup1)}>Move to round 3</button>: null}
-          <ReactAudioPlayer src={this.state.round2matchup1.profile1songlink} controls/>
+          <div className='jumbotron tournament_background'></div>
+          <div className='jumbotron jumbotron-tournament'>
+            <h2>Second Round</h2>
+            <div className = "songTitle white tagTitle">Round 2 Beat: {this.state.round2matchup1.roundbeatname} 
+              <div className='tagTitle'><ReactAudioPlayer src={this.state.round2matchup1.roundbeatlink} controls/></div></div>
+          </div>
+          <h3 className='h3-tournament'>First Matchup</h3>
+          <div className="songListRowTournament rcorners col-xs-6">
+            <div className = "songTitleTournament white">{this.state.round2matchup1.profile1songname}</div>
+            <div className = "songCreatorTournament white">{this.state.round2matchup1.profile1name}</div>
+            <ReactAudioPlayer src={this.state.round2matchup1.profile1songlink} controls/>
+            <button className=" btn comBut btn-danger btn-md" onClick={() => this.voteSubmission(1, this.state.round2matchup1)}>Like</button>
+            {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound3(1, this.state.round2matchup1)}>Move to round 3</button>: null}
+            <div className = "songVote white">Votes: {this.state.round2matchup1.profile1count}</div>
+          </div> 
+          <div className="songListRowTournament rcorners col-xs-6">
+            <div className = "songTitleTournament white">{this.state.round2matchup1.profile2songname}</div>
+            <div className = "songCreatorTournament white">{this.state.round2matchup1.profile2name}</div>
+            <ReactAudioPlayer src={this.state.round2matchup1.profile2songlink} controls/>
+            <button className=" btn comBut btn-danger btn-md" onClick={() => this.voteSubmission(2, this.state.round2matchup1)}>Like</button>
+            {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound3(2, this.state.round2matchup1)}>Move to round 3</button>: null}
+            <div className = "songVote white">Votes: {this.state.round2matchup1.profile2count}</div>
           </div> <br/> <br/>
-          <div className="container songListRow rcorners">
-          <div>Profile: {this.state.round2matchup1.profile2name}</div>
-          <div>Song Submission: {this.state.round2matchup1.profile2songname}</div>
-          <div>Votes: {this.state.round2matchup1.profile2count}</div>
-          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(2, this.state.round2matchup1)}>Like</button>
-          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound3(2, this.state.round2matchup1)}>Move to round 3</button>: null}
-          <ReactAudioPlayer src={this.state.round2matchup1.profile2songlink} controls/>
+          <h3 className='h3-tournament'>Second Matchup</h3>
+          <div className="songListRowTournament rcorners col-xs-6">
+            <div className = "songTitleTournament white">{this.state.round2matchup2.profile1songname}</div>
+            <div className = "songCreatorTournament white">{this.state.round2matchup2.profile1name}</div>
+            <ReactAudioPlayer src={this.state.round2matchup2.profile1songlink} controls/>
+            <button className=" btn comBut btn-danger btn-md" onClick={() => this.voteSubmission(1, this.state.round2matchup2)}>Like</button>
+            {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound3(3, this.state.round2matchup2)}>Move to round 3</button>: null}
+            <div className = "songVote white">Votes: {this.state.round2matchup2.profile1count}</div>
+          </div> 
+          <div className="songListRowTournament rcorners col-xs-6">
+            <div className = "songTitleTournament white">{this.state.round2matchup2.profile2songname}</div>
+            <div className = "songCreatorTournament white">{this.state.round2matchup2.profile2name}</div>
+            <ReactAudioPlayer src={this.state.round2matchup2.profile2songlink} controls/>
+            <button className=" btn comBut btn-danger btn-md" onClick={() => this.voteSubmission(2, this.state.round2matchup2)}>Like</button>
+            {this.state.profileunlock ?<button className=" btn comBut btn-danger btn-md" onClick={() => this.insertRound3(4, this.state.round2matchup2)}>Move to round 3</button>: null}
+            <div className = "songVote white">Votes: {this.state.round2matchup2.profile2count}</div>
           </div> <br/> <br/>
-          <h3>Second Matchup</h3>
-          <div className="container songListRow rcorners">
-          <div >Profile: {this.state.round2matchup2.profile1name}</div>
-          <div>Song Submission: {this.state.round2matchup2.profile1songname}</div>
-          <div>Votes: {this.state.round2matchup2.profile1count}</div>
-          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(1, this.state.round2matchup2)}>Like</button>
-          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound3(3, this.state.round2matchup2)}>Move to round 3</button>: null}
-          <ReactAudioPlayer src={this.state.round2matchup2.profile1songlink} controls/>
-          </div> <br/> <br/>
-          <div className="container songListRow rcorners">
-          <div>Profile: {this.state.round2matchup2.profile2name}</div>
-          <div>Song Submission: {this.state.round2matchup2.profile2songname}</div>
-          <div>Votes: {this.state.round2matchup2.profile2count}</div>
-          <button className=" btn comBut btn-danger" onClick={() => this.voteSubmission(2, this.state.round2matchup2)}>Like</button>
-          {this.state.profileunlock ?<button className=" btn comBut btn-danger" onClick={() => this.insertRound3(4, this.state.round2matchup2)}>Move to round 3</button>: null}
-          <ReactAudioPlayer src={this.state.round2matchup2.profile2songlink} controls/>
-          </div> <br/> <br/>
-          {this.state.profileunlock ? <button onClick={this.submitRound2}>Submit Round 2 Winners</button>: null}
+          {this.state.profileunlock ? <button className="submitButtonBoi btn comBut btn-danger btn-md tagTitle" onClick={this.submitRound2}>Submit Round 2 Winners</button>: null}
         </div>
     )
   }

@@ -89,7 +89,7 @@ class SongEntry extends React.Component {
 		return (
 			<div className="container songListRow rcorners">		
         <div className="row">
-					<h3 onClick={()=>{this.handleSongClick(this.props.song.submission_id)}} className="songTitle">{this.props.song.name}</h3>
+					<h3 onClick={()=>{this.handleSongClick(this.props.song.submission_id)}} className="songTitle cursorPoint">{this.props.song.name}</h3>
 				</div>	
 				<div className="row">
 					<ReactAudioPlayer src={this.props.song.link ? this.props.song.link : this.state.default} controls/>
@@ -99,7 +99,7 @@ class SongEntry extends React.Component {
 					<button className="btn comBut btn-info" href="#">  
 						<span className="glyphicon glyphicon-comment" aria-hidden="true"></span> Comments {this.state.numCom}
 					</button>
-          <p onClick={()=>{this.handleProfileSongClick(this.props.song.profiles_id)}}className="songCreator">By {usrPic}</p>
+          <p onClick={()=>{this.handleProfileSongClick(this.props.song.profiles_id)}}className="songCreator cursorPoint">By {usrPic}</p>
 				</div>		
       </div>
  		)

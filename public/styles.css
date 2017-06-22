@@ -25,7 +25,23 @@ body {
 	padding-left: 10px;
 }
 
+.songTitleTournament {
+	font-weight: bold;
+	padding-left: 10px;
+    font-size: 20px;
+}
+
+.songVote {
+	font-weight: bold;
+	padding-left: 10px;
+}
+
 .songCreator {
+	font-weight: bold;
+	padding-left: 10px;
+}
+
+.songCreatorTournament {
 	font-weight: bold;
 	padding-left: 10px;
 }
@@ -42,13 +58,48 @@ h2 {
 	color: #E0E0E0;
 }
 
+h3 {
+    color: black;
+}
+
 h5 {
 	color: #E0E0E0;
 }
 
-h3 {
-    color: #E0E0E0;
+h3.h3-tournament {
+    color: white;
+    text-align: center;
 }
+
+.competitorSelect {
+    background-color: white;
+    margin-bottom: 15px;
+    /*margin-right: 15px;*/
+    padding-left: 0px;
+    padding-right: 0px;
+    border-radius: 5px;
+}
+
+.dropzone {
+    display: inline-block;
+}
+
+.btnSpacer {
+    margin-top: 15px;
+}
+
+.tourneyName {
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+p.titleTourney {
+    color: white;
+    font-size: 35px;
+    /*display: inline;*/
+
+}
+
 .glyphicon {
   color: white;
 }
@@ -69,6 +120,16 @@ button:hover {
 /*Comment Button Stylings*/
 .comBut {
 	margin-top: -25px
+}
+
+.btn.comment-button-tournament {
+    background-color:white;
+    color: black;
+}
+
+.btn.comment-button-tournament:active {
+    background-color:black;
+    color: white;
 }
 
 /*Website Title Stylings*/
@@ -144,6 +205,7 @@ div.tab button.active {
 .jumboPic {
   background: url('./assets/banner.jpg') no-repeat center center;
   position: fixed;
+  background-color: black;
   width: 100%;
   height: 100%; /*same height as jumbotron */
   top:0;
@@ -152,8 +214,20 @@ div.tab button.active {
 }
 
 .tournament_background {
-  background: url('./assets/Tupac.jpg') no-repeat center center;
+  background: url('./assets/rap-battle.jpg') no-repeat center center;
   background-color: black;
+  /*opacity: 0.2;*/
+  position: fixed;
+  width: 100%;
+  height: 100%; /*same height as jumbotron */
+  top:0;
+  left:0;
+  z-index: -1;
+}
+
+.tournament_background1 {
+  background-color: beige;
+  /*opacity: 0.2;*/
   position: fixed;
   width: 100%;
   height: 100%; /*same height as jumbotron */
@@ -173,6 +247,13 @@ div.tab button.active {
 
 .inputStyle {
   margin-top: 11px;
+}
+
+
+
+.jumbotron-tournament {
+    background: rgba(0,0,0,0.4);
+    color: white;
 }
 
 .rcorners {
@@ -237,6 +318,11 @@ div.tab button.active {
 
 .cursorPoint {
     cursor: pointer;
+}
+
+.submitButtonBoi {
+    margin-top: 25px;
+    display: block;
 }
 
 .commentUserName {
