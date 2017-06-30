@@ -1,10 +1,10 @@
-const LOCAL_PG = {
-    "database": "thesis",
-    "user": "postgres",
-    "password": "postgres",
-    "host": "localhost",
-    "port": 5432
-}
+// const LOCAL_PG = {
+//     "database": "thesis",
+//     "user": "postgres",
+//     "password": "postgres",
+//     "host": "localhost",
+//     "port": 5432
+// }
 //deploy heroku
 module.exports = {
     client: "postgresql",
